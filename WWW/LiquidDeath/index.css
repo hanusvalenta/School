@@ -6,6 +6,10 @@
     --gold: #EBB342;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 @font-face {
     font-family: ACMN;
     src: url(assets/font/Acumin-RPro.woff);
@@ -100,17 +104,17 @@ body {
 
 h1 {
     color: var(--darkest);
-    font-size: 10vw;
+    font-size: 6vw;
     margin-top: 20vw
 }
 
 h2 {
-    font-size: 5vw;
+    font-size: 3vw;
 }
 
 p {
     color: var(--darkest);
-    font-size: 3vw;
+    font-size: 2vw;
     margin-left: 5vw;
     margin-right: 5vw;
 }
