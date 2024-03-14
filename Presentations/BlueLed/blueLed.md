@@ -53,7 +53,7 @@ bez víkendů a svátků rok a půl roku
 
 --- 
 
-- víroba P typu
+- výroba P typu
 - Nitridy galia
 - Výhra
 
