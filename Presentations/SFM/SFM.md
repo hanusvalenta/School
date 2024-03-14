@@ -39,9 +39,13 @@ class: invert
 
 # K čemu pomohlo?
 
+![bg right](spy.jpg)
+
 ---
 
 # Příklady prací
+
+![bg right](pony.png)
 
 ---
 
@@ -54,6 +58,8 @@ class: invert
 # Příklad animace
 
 [Pootis Engage // EXTREME - Ceno0](https://www.youtube.com/watch?v=lGJBUauU-CE&t=694s)
+
+![bg right](pootis.jpg)
 
 ---
 
