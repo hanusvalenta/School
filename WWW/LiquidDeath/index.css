@@ -141,7 +141,6 @@ a {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-evenly;
-    overflow-y: scroll;
     max-width: 100vw;
 }
 
