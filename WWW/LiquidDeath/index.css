@@ -49,7 +49,6 @@ body {
 }
 
 .NavImg {
-    filter: invert(100%);
     top: 0%;
     z-index: 3;
     position: relative;
