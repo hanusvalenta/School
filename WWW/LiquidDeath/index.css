@@ -163,6 +163,16 @@ a {
     font-size: 1.5vw;
 }
 
+.katka {
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    align-items:baseline;
+    background-color: var(--whiteDim);
+    border-radius: 25px;
+    margin-top: 2vw;
+}
+
 .buttonDiv {
     width: 7vw;
     height: 3vw;
