@@ -7,6 +7,10 @@
     --gold: #EBB342;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -188,13 +192,6 @@ a {
 }
 
 .can {
+    position: absolute;
     z-index: 3;
-    overflow: hidden;
-}
-
-.pokus {
-    overflow: hidden;
-    background-color: red;
-    width: 150px;
-    height: 200px;;
 }
