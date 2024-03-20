@@ -194,3 +194,15 @@ a {
     position: absolute;
     z-index: 3;
 }
+
+.canHolder {
+    width: 100vw;
+    height: 15vw;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+}
+
+.canHolder img {
+    z-index: 3;
+}
