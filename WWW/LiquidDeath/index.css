@@ -1,6 +1,7 @@
 :root {
     --darkest: #0C0B0B;
-    --white: #ffffff;
+    --white: hsl(0, 0%, 100%);
+    --whiteDim: rgba(228, 228, 228, 0.75);
     --lighter: #CBCBCA;
     --mountainGray: #F0F0F0;
     --gold: #EBB342;
@@ -40,11 +41,11 @@ body {
     justify-content: space-between;
     transition-duration: 1s;
     background-color: var(--darkest);
-    margin-top: 2vw;
+    top: 2vw;
 }
 
 .NavImg {
-    filter: invert(1);
+    filter: invert(100%);
     top: 0%;
     z-index: 3;
     position: relative;
@@ -127,8 +128,73 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
 }
+
+
 
 .reference {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    overflow-y: scroll;
+    max-width: 100vw;
+}
+
+.referenceBox {
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--whiteDim);
+    border-radius: 25px;
+    margin-top: 2vw;
+}
+
+.reference h2 {
+ font-size: 15.vw;
+}
+
+.reference p {
+    font-size: 1.5vw;
+}
+
+.buttonDiv {
+    width: 7vw;
+    height: 3vw;
+    background-color: var(--white);
+    position: absolute; 
+    top: 35vw;
+    z-index: 5;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.moreButton {
+   color: var(--darkest);
+   font-size: 1.2vw;
+   text-decoration: none;
+}
+
+.buttonDiv:hover {
+    background-color: var(--whiteDim);
+}
+
+.buttonDiv:hover .moreButton {
+    color: var(--white);
+}
+
+.can {
+    z-index: 3;
+    overflow: hidden;
+}
+
+.pokus {
+    overflow: hidden;
+    background-color: red;
+    width: 150px;
+    height: 200px;;
 }
