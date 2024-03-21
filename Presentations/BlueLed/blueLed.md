@@ -65,5 +65,13 @@ bez víkendů a svátků rok a půl roku
 
 ---
 
+# Zdroje:
+
+- [wikipedia](https://en.wikipedia.org/wiki/Shuji_Nakamura)
+- [nobelprize](https://www.nobelprize.org/prizes/physics/2014/nakamura/facts/)
+- [britannica](https://www.britannica.com/biography/Shuji-Nakamura)
+
+---
+
 # Zpětná vazba a děkuji za pozornost
 ＜（＾－＾）＞🤍
