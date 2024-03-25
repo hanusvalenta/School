@@ -141,7 +141,6 @@ a {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-evenly;
-    overflow-y: scroll;
     max-width: 100vw;
 }
 
@@ -161,6 +160,16 @@ a {
 
 .reference p {
     font-size: 1.5vw;
+}
+
+.katka {
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    align-items:baseline;
+    background-color: var(--whiteDim);
+    border-radius: 25px;
+    margin-top: 2vw;
 }
 
 .buttonDiv {
@@ -196,6 +205,8 @@ a {
 }
 
 .canHolder {
+    position: relative;
+    bottom: 0vw;
     width: 100vw;
     height: 15vw;
     display: flex;
