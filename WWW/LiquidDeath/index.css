@@ -201,7 +201,7 @@ a {
 
 .can {
     position: absolute;
-    z-index: 3;
+    z-index: -1;
 }
 
 .canHolder {
