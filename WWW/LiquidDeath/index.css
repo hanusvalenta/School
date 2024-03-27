@@ -332,26 +332,6 @@ a {
     }
 }
 
-@media only screen and (max-width: 1440px) {
-    .NavBar {
-        width: 18vw;
-        height: 2vw;
-    }
-
-    .NavImgLeft {
-        width: 2vw;
-    }
-
-    .NavImgRight {
-        width: 2vw;
-        left: -8vw;
-    }
-
-    .NavBar:hover .NavImgRight {
-        left: 0vw;
-    }
-}
-
 @media only screen and (max-width: 1024px) {
     .NavBar {
         width: 14vw;
@@ -365,6 +345,26 @@ a {
     .NavImgRight {
         width: 3vw;
         left: -21vw;
+    }
+
+    .NavBar:hover .NavImgRight {
+        left: 0vw;
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    .NavBar {
+        width: 18vw;
+        height: 2vw;
+    }
+
+    .NavImgLeft {
+        width: 2vw;
+    }
+
+    .NavImgRight {
+        width: 2vw;
+        left: -8vw;
     }
 
     .NavBar:hover .NavImgRight {
