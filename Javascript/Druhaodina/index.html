@@ -9,16 +9,14 @@
 
 <p>Jméno</p><input type="text" name="fname" id="fname"><br>
 <p>Přijmení</p><input type="text" name="fLastName" id="fLastName"><br>
+<p>Věk</p><input type="number" name="fVek" id="fVek"><br>
 <p>Kurz</p><input type="text" name="fKurz" id="fKurz"><br>
 
+<p id="text"></p>
+
 <button onclick="zapsatSe()">Zapsat se</button>
-
-<br>
-
 <button onclick="ukazat()">Vypsat</button>
-
-<p id="zapsano"></p>
-<p id="ukazka"></p>
+<button onclick="filterByAge()">Filtrovat 18+</button>
 
 <script src="index.js"></script>
 
