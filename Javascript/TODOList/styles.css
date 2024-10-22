@@ -7,7 +7,7 @@ body {
 }
 
 h3 {
-    color: #4A90E2;
+    color: #414141;
     font-size: 24px;
     margin-bottom: 20px;
 }
@@ -22,7 +22,7 @@ input[type="text"] {
 }
 
 button {
-    background-color: #4A90E2;
+    background-color: #6f6f6f;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -34,7 +34,7 @@ button {
 }
 
 button:hover {
-    background-color: #357ABD;
+    background-color: #414141;
 }
 
 ul {
@@ -58,12 +58,12 @@ li {
 }
 
 li button {
-    background-color: #E74C3C;
+    background-color: #ed3131;
     padding: 5px 10px;
     font-size: 14px;
     border-radius: 5px;
 }
 
 li button:hover {
-    background-color: #C0392B;
+    background-color: #a42323;
 }
