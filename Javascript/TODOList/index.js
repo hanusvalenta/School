@@ -20,11 +20,22 @@ function Add(){
             <button onclick="deleteEntry(${index})">Delete</button>
         </li>
     `).join('');
+
     document.getElementById('text').innerHTML = `<ul>${listHtml}</ul>`;
+
+    document.getElementById('fNote').value = '';
+    document.getElementById('fName').value = '';
 }
 
 window.onload = function() {
     let todoList = JSON.parse(localStorage.getItem('todoList')) || [];
-    let listHtml = todoList.map(entry => `<li>${entry.name}: ${entry.note} (added on ${entry.time})</li>`).join('');
+   
+    let listHtml = todoList.map((entry, index) => `
+        <li>
+            ${entry.name}: ${entry.note} (added on ${entry.time})
+            <button onclick="deleteEntry(${index})">Delete</button>
+        </li>
+    `).join('');
+
     document.getElementById('text').innerHTML = `<ul>${listHtml}</ul>`;
 };
