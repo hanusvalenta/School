@@ -16,7 +16,7 @@ function Add(){
 
     let listHtml = todoList.map((entry, index) => `
         <li>
-            ${entry.name}: ${entry.note} (added on ${entry.time})
+            <h2>${entry.name}</h2> ${entry.note} (added on ${entry.time})
             <button onclick="deleteEntry(${index})">Delete</button>
         </li>
     `).join('');
@@ -32,7 +32,7 @@ window.onload = function() {
    
     let listHtml = todoList.map((entry, index) => `
         <li>
-            ${entry.name}: ${entry.note} (added on ${entry.time})
+            <h2>${entry.name}</h2> ${entry.note} (added on ${entry.time})
             <button onclick="deleteEntry(${index})">Delete</button>
         </li>
     `).join('');
