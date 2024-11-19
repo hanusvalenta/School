@@ -1,18 +1,20 @@
 public class Main {
     public static void main(String[] args) {
-        int pole[] = {4,14,5,1,9,40};
-        int nejVetsi = pole[0];
-        int nejMensi = pole[0];
+        int[][] pole = new int[4][4];
 
         for (int i = 0; i < pole.length; i++) {
-            if (pole[i] > nejVetsi) {
-                nejVetsi = pole[i];
-            }
-            if (pole[i] < nejMensi) {
-                nejMensi = pole[i];
+            for (int j = 0; j < pole.length; j++) {
+                pole[i][j] = (int) Math.random();
             }
         }
 
-        System.out.println(nejVetsi + " " + nejMensi);
+        for (int i = 0; i < pole.length; i++) {
+            for (int j = 0; j < pole.length; j++) {
+                if (j == 3) {
+                    System.out.println(pole[i][j] + System.lineSeparator());
+                }
+                System.out.print(pole[i][j]);
+            }
+        }
     }
 }

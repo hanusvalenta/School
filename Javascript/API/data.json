@@ -1,0 +1,22 @@
+{
+    "name": "Oreson",
+    "age": 30,
+    "occupation": "Software Developer",
+    "location": {
+        "city": "San Francisco",
+        "state": "California",
+        "country": "USA"
+    },
+    "skills": [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "React",
+        "Node.js"
+    ],
+    "hobbies": [
+        "Reading",
+        "Hiking",
+        "Gaming"
+    ]
+}
