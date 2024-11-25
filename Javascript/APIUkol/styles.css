@@ -96,3 +96,23 @@ button:active {
         font-size: 1.5rem;
     }
 }
+
+/* Weather Tiles */
+.weather-tile {
+    background: #f0f8ff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.weather-tile p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.weather-tile strong {
+    font-size: 18px;
+    color: #2c3e50;
+}
