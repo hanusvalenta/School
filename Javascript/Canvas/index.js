@@ -1,79 +1,71 @@
-const canvas = document.getElementById('cubeCanvas');
+const canvas = document.getElementById('fractalCanvas');
 const ctx = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const vertices = [
-    [-1, -1, -1],
-    [1, -1, -1],
-    [1, 1, -1],
-    [-1, 1, -1],
-    [-1, -1, 1],
-    [1, -1, 1],
-    [1, 1, 1],
-    [-1, 1, 1]
-];
+let maxIterations = 100;
+let zoom = 200;
+let offsetX = -canvas.width / 2 / zoom;
+let offsetY = -canvas.height / 2 / zoom;
+let zoomSpeed = 1.02;
 
-const edges = [
-    [0, 1], [1, 2], [2, 3], [3, 0],
-    [4, 5], [5, 6], [6, 7], [7, 4],
-    [0, 4], [1, 5], [2, 6], [3, 7]
-];
+function mandelbrot(cRe, cIm, maxIter) {
+    let zRe = 0, zIm = 0;
+    let n = 0;
 
-let angleX = 0;
-let angleY = 0;
+    while (n < maxIter) {
+        const zRe2 = zRe * zRe - zIm * zIm + cRe;
+        const zIm2 = 2 * zRe * zIm + cIm;
 
-function project([x, y, z]) {
-    const size = Math.min(canvas.width, canvas.height) / 4;
-    const perspective = 4 / (4 + z);
-    const x2D = x * perspective * size + canvas.width / 2;
-    const y2D = -y * perspective * size + canvas.height / 2;
-    return [x2D, y2D];
+        zRe = zRe2;
+        zIm = zIm2;
+
+        if (zRe * zRe + zIm * zIm > 4) {
+            break;
+        }
+        n++;
+    }
+
+    return n;
 }
 
-function rotate([x, y, z], angleX, angleY) {
-    const sinX = Math.sin(angleX);
-    const cosX = Math.cos(angleX);
-    const sinY = Math.sin(angleY);
-    const cosY = Math.cos(angleY);
+function drawMandelbrot() {
+    const width = canvas.width;
+    const height = canvas.height;
 
-    let y1 = y * cosX - z * sinX;
-    let z1 = y * sinX + z * cosX;
+    ctx.clearRect(0, 0, width, height);
 
-    let x1 = x * cosY + z1 * sinY;
-    let z2 = -x * sinY + z1 * cosY;
+    for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
+            const cRe = (x - width / 2) / zoom + offsetX;
+            const cIm = (y - height / 2) / zoom + offsetY;
 
-    return [x1, y1, z2];
+            const n = mandelbrot(cRe, cIm, maxIterations);
+
+            const color = n === maxIterations ? 0 : 255 - Math.floor((n / maxIterations) * 255);
+
+            ctx.fillStyle = `rgb(${color}, ${color}, ${color})`;
+            ctx.fillRect(x, y, 1, 1);
+        }
+    }
 }
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const rotatedVertices = vertices.map(vertex => rotate(vertex, angleX, angleY));
-    const projectedVertices = rotatedVertices.map(project);
-
-    ctx.strokeStyle = 'black';
-    ctx.lineWidth = 2;
-
-    edges.forEach(([start, end]) => {
-        const [x1, y1] = projectedVertices[start];
-        const [x2, y2] = projectedVertices[end];
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.stroke();
-    });
-
-    angleX += 0.01;
-    angleY += 0.01;
-
-    requestAnimationFrame(draw);
+function animate() {
+    zoom *= zoomSpeed;
+    offsetX += 0.01 / zoom;
+    offsetY += 0.01 / zoom;
+    drawMandelbrot();
+    requestAnimationFrame(animate);
 }
 
-draw();
+animate();
 
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    zoom = 200;
+    offsetX = -canvas.width / 2 / zoom;
+    offsetY = -canvas.height / 2 / zoom;
+    drawMandelbrot();
 });
