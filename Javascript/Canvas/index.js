@@ -1,4 +1,4 @@
-const canvas = document.getElementById('fractalCanvas');
+const canvas = document.getElementById('Canvas');
 const ctx = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
@@ -9,9 +9,9 @@ let zoom = 200;
 let offsetX = -0.75;
 let offsetY = 0;
 let targetZoom = zoom;
-let zoomSpeed = 3;
-let easingFactor = 0.001;
-let shiftSpeed = 0.005;
+let zoomSpeed = 1.02;
+let easingFactor = 0.5;
+let shiftSpeed = 0.002;
 
 function mandelbrot(cRe, cIm, maxIter) {
     let zRe = 0, zIm = 0;
