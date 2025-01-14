@@ -6,9 +6,12 @@ canvas.height = window.innerHeight;
 
 let maxIterations = 100;
 let zoom = 200;
-let offsetX = -canvas.width / 2 / zoom;
-let offsetY = -canvas.height / 2 / zoom;
-let zoomSpeed = 1.02;
+let offsetX = -0.75;
+let offsetY = 0;
+let targetZoom = zoom;
+let zoomSpeed = 3;
+let easingFactor = 0.001;
+let shiftSpeed = 0.005;
 
 function mandelbrot(cRe, cIm, maxIter) {
     let zRe = 0, zIm = 0;
@@ -52,9 +55,11 @@ function drawMandelbrot() {
 }
 
 function animate() {
-    zoom *= zoomSpeed;
-    offsetX += 0.01 / zoom;
-    offsetY += 0.01 / zoom;
+    targetZoom *= zoomSpeed;
+    zoom += (targetZoom - zoom) * easingFactor;
+
+    offsetX -= shiftSpeed / zoom;
+
     drawMandelbrot();
     requestAnimationFrame(animate);
 }
@@ -65,7 +70,8 @@ window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     zoom = 200;
-    offsetX = -canvas.width / 2 / zoom;
-    offsetY = -canvas.height / 2 / zoom;
+    offsetX = -0.75;
+    offsetY = 0;
+    targetZoom = zoom;
     drawMandelbrot();
 });
