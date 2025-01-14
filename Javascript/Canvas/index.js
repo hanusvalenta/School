@@ -27,10 +27,10 @@ function Fractal(cRe, cIm, maxIter) {
         const argZ = Math.atan2(zIm, zRe);
         const magPower = Math.pow(magnitude, power);
 
-        const zReTemp = magPower * Math.cos(power * argZ) +
-            cRe * Math.exp(-alpha * magnitude) * (1 + beta * Math.sin(gamma * magnitude));
-        const zImTemp = magPower * Math.sin(power * argZ) +
-            cIm * Math.exp(-alpha * magnitude) * (1 + beta * Math.sin(gamma * magnitude));
+        // Update z using the given equation
+        const expTerm = Math.exp(-alpha * magnitude) * (1 + beta * Math.sin(gamma * magnitude));
+        const zReTemp = magPower * Math.cos(power * argZ) + cRe * expTerm;
+        const zImTemp = magPower * Math.sin(power * argZ) + cIm * expTerm;
 
         zRe = zReTemp;
         zIm = zImTemp;
