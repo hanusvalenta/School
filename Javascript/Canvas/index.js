@@ -11,18 +11,21 @@ let offsetY = 0;
 let targetZoom = zoom;
 let zoomSpeed = 1.02;
 let easingFactor = 0.5;
-let shiftSpeed = 0.002;
+let shiftSpeed = 0.05;
 
-function mandelbrot(cRe, cIm, maxIter) {
+let power = 2;
+
+function Fractal(cRe, cIm, maxIter) {
     let zRe = 0, zIm = 0;
     let n = 0;
 
     while (n < maxIter) {
-        const zRe2 = zRe * zRe - zIm * zIm + cRe;
-        const zIm2 = 2 * zRe * zIm + cIm;
+        const magnitude = Math.sqrt(zRe * zRe + zIm * zIm);
+        const zReTemp = Math.pow(zRe * zRe + zIm * zIm, power / 2) * Math.cos(power * Math.atan2(zIm, zRe)) + cRe * Math.exp(-magnitude);
+        const zImTemp = Math.pow(zRe * zRe + zIm * zIm, power / 2) * Math.sin(power * Math.atan2(zIm, zRe)) + cIm * Math.exp(-magnitude);
 
-        zRe = zRe2;
-        zIm = zIm2;
+        zRe = zReTemp;
+        zIm = zImTemp;
 
         if (zRe * zRe + zIm * zIm > 4) {
             break;
@@ -33,7 +36,7 @@ function mandelbrot(cRe, cIm, maxIter) {
     return n;
 }
 
-function drawMandelbrot() {
+function drawFractal() {
     const width = canvas.width;
     const height = canvas.height;
 
@@ -44,7 +47,7 @@ function drawMandelbrot() {
             const cRe = (x - width / 2) / zoom + offsetX;
             const cIm = (y - height / 2) / zoom + offsetY;
 
-            const n = mandelbrot(cRe, cIm, maxIterations);
+            const n = Fractal(cRe, cIm, maxIterations);
 
             const color = n === maxIterations ? 0 : 255 - Math.floor((n / maxIterations) * 255);
 
@@ -60,7 +63,7 @@ function animate() {
 
     offsetX -= shiftSpeed / zoom;
 
-    drawMandelbrot();
+    drawFractal();
     requestAnimationFrame(animate);
 }
 
@@ -73,5 +76,5 @@ window.addEventListener('resize', () => {
     offsetX = -0.75;
     offsetY = 0;
     targetZoom = zoom;
-    drawMandelbrot();
+    drawFractal();
 });
