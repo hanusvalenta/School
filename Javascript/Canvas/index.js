@@ -14,6 +14,9 @@ let easingFactor = 0.5;
 let shiftSpeed = 0.05;
 
 let power = 2;
+let alpha = 1;
+let beta = 0.5;
+let gamma = 5;
 
 function Fractal(cRe, cIm, maxIter) {
     let zRe = 0, zIm = 0;
@@ -21,8 +24,13 @@ function Fractal(cRe, cIm, maxIter) {
 
     while (n < maxIter) {
         const magnitude = Math.sqrt(zRe * zRe + zIm * zIm);
-        const zReTemp = Math.pow(zRe * zRe + zIm * zIm, power / 2) * Math.cos(power * Math.atan2(zIm, zRe)) + cRe * Math.exp(-magnitude);
-        const zImTemp = Math.pow(zRe * zRe + zIm * zIm, power / 2) * Math.sin(power * Math.atan2(zIm, zRe)) + cIm * Math.exp(-magnitude);
+        const argZ = Math.atan2(zIm, zRe);
+        const magPower = Math.pow(magnitude, power);
+
+        const zReTemp = magPower * Math.cos(power * argZ) +
+            cRe * Math.exp(-alpha * magnitude) * (1 + beta * Math.sin(gamma * magnitude));
+        const zImTemp = magPower * Math.sin(power * argZ) +
+            cIm * Math.exp(-alpha * magnitude) * (1 + beta * Math.sin(gamma * magnitude));
 
         zRe = zReTemp;
         zIm = zImTemp;
