@@ -27,7 +27,7 @@ h2
 {
     position: absolute;
     font-size: 15px;
-    bottom: 10px;
+    bottom: 30px;
     right: 10px;
     color: black;
 }
@@ -36,7 +36,7 @@ h3
 {
     position: absolute;
     font-size: 15px;
-    bottom: 5px;
+    bottom: 50px;
     right: 20px;
     color: black;
 }
