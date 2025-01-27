@@ -73,7 +73,7 @@ public class Main {
 
         Text5[0] = MessageFormat.format("{0} v {1} neprokázal{2} dostatečné znalosti. Známka: {3}. Doporučuji se ale zlepšit v {4}.", Jmeno, OsloveniKoncovka, Predmet, Znamka, Zlepsit);
         Text5[1] = MessageFormat.format("{0} v {1} nesplnil{2} očekávání. Známka: {3}. Doporučuji se ale zlepšit v {4}.", Jmeno, OsloveniKoncovka, Predmet, Znamka, Zlepsit);
-        Text5[2] = MessageFormat.format("{0} by měl zaměřit více pozornosti na {1}. Známka: {2}. Doporučuji se ale zlepšit v {3}.", Jmeno, Predmet, Znamka, Zlepsit);
+        Text5[2] = MessageFormat.format("{0} by měl{4} zaměřit více pozornosti na {1}. Známka: {2}. Doporučuji se ale zlepšit v {3}.", Jmeno, Predmet, Znamka, Zlepsit, OsloveniKoncovka);
 
         if (Znamka == 1) {
             System.out.println(Text1[TextIndex]);
