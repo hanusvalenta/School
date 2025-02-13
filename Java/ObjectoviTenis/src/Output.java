@@ -10,7 +10,7 @@ public class Output {
     }
 
     public void announceSetWin(String playerName) {
-        System.out.println(playerName + " wins the set!");
+        System.out.println(playerName + " wins!");
     }
 
     public void announceMatchWin(String playerName) {
