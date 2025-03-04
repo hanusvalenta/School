@@ -2,7 +2,7 @@ const fs = require("fs");
 const readline = require("readline-sync");
 
 function factorial(n) {
-    if (n < 0) return "Faktoriál nelze spočítat pro záporná čísla";
+    if (n < 0) return "Faktorial nelze spocitat pro zaporna cisla";
     if (n === 0 || n === 1) return 1;
     let result = 1;
     for (let i = 2; i <= n; i++) {
@@ -24,35 +24,35 @@ function calculate(a, operator, b) {
             result = a * b;
             break;
         case "/":
-            result = b !== 0 ? a / b : "Chyba: dělení nulou";
+            result = b !== 0 ? a / b : "Chyba deleni nulou";
             break;
         case "%":
-            result = b !== 0 ? a % b : "Chyba: dělení nulou";
+            result = b !== 0 ? a % b : "Chyba deleni nulou";
             break;
         case "^":
             result = Math.pow(a, b);
             break;
         case "sqrt":
-            result = a >= 0 ? Math.sqrt(a) : "Chyba: odmocnina ze záporného čísla";
+            result = a >= 0 ? Math.sqrt(a) : "Odmocnina ze zaporného cisla";
             break;
         case "!":
             result = factorial(a);
             break;
         default:
-            result = "Neplatná operace";
+            result = "Neplatna operace";
     }
     return result;
 }
 
 function readFromConsole() {
-    let num1 = parseFloat(readline.question("Zadej první číslo: "));
-    let operator = readline.question("Zadej operaci (+, -, *, /, %, ^, sqrt, !): ");
-    let num2 = operator !== "sqrt" && operator !== "!" ? parseFloat(readline.question("Zadej druhé číslo: ")) : null;
+    let num1 = parseFloat(readline.question("Zadej prvni cislo "));
+    let operator = readline.question("Zadej operaci +, -, *, /, %, ^, sqrt, ! ");
+    let num2 = operator !== "sqrt" && operator !== "!" ? parseFloat(readline.question("Zadej druhe cislo ")) : null;
 
     let result = calculate(num1, operator, num2);
-    console.log(`Výsledek: ${result}`);
+    console.log(`Vysledek ${result}`);
 
-    fs.appendFileSync("vysledky.txt", `Vstup: ${num1} ${operator} ${num2 !== null ? num2 : ""} = Výsledek: ${result}\n`);
+    fs.appendFileSync("vysledky.txt", `${num1} ${operator} ${num2 !== null ? num2 : ""} = ${result}\n`);
 }
 
 function readFromFile(filePath) {
@@ -65,23 +65,23 @@ function readFromFile(filePath) {
                 let operator = parts[1];
                 let num2 = parts.length === 3 ? parseFloat(parts[2]) : null;
                 let result = calculate(num1, operator, num2);
-                console.log(`Vstup: ${num1} ${operator} ${num2 !== null ? num2 : ""} = Výsledek: ${result}`);
-                fs.appendFileSync("vysledky.txt", `Vstup: ${num1} ${operator} ${num2 !== null ? num2 : ""} = Výsledek: ${result}\n`);
+                console.log(`${num1} ${operator} ${num2 !== null ? num2 : ""} =  ${result}`);
+                fs.appendFileSync("vysledky.txt", `${num1} ${operator} ${num2 !== null ? num2 : ""} = ${result}\n`);
             } else {
-                console.log(`Neplatný vstup: ${line}`);
+                console.log(`Neplatny vstup ${line}`);
             }
         });
     } catch (error) {
-        console.error("Chyba při čtení souboru:", error);
+        console.error("Neplatny soubor ", error);
     }
 }
 
-let inputMethod = readline.question("Chceš zadávat vstup z konzole (C) nebo ze souboru (S)? ").toUpperCase();
+let inputMethod = readline.question("Vstup z konzole C || soubor S? ").toUpperCase();
 if (inputMethod === "C") {
     readFromConsole();
 } else if (inputMethod === "S") {
-    let filePath = readline.question("Zadej název souboru: ");
+    let filePath = readline.question("Nazev souboru ");
     readFromFile(filePath);
 } else {
-    console.log("Neplatná volba");
+    console.log("Neplatna moznost");
 }
