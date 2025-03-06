@@ -4,7 +4,7 @@ public class GameLogic {
     static GameFunctions functions = new GameFunctions();
     static Input input = new Input();
 
-    public static void Start() {
+    public void Start() {
 
         while (!Player.GameOver) {
             GameFunctions.printScore();
