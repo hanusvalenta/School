@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Handlebars Template</title>
+</head>
+<body>
+    <header>
+        <h1>{{title}}</h1>
+    </header>
+    <main>
+        <p>{{description}}</p>
+        <ul>
+            {{#each items}}
+                <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2023 Example Company</p>
+    </footer>
+</body>
+</html>
