@@ -8,17 +8,14 @@ public class Main {
         double castka = ask.nextDouble() * 1000000;
 
         System.out.println("Zadej na kolik let");
-        double roky = ask.nextDouble();
-        roky = roky * 12;
+        double roky = ask.nextDouble() * 12;
 
         System.out.println("Zadej na procento uroku");
         double urokProcento = ask.nextDouble();
 
-        double urok = castka / 100;
-        urok = urok * urokProcento;
+        double urok = castka * urokProcento / 100;
 
-        double splatka = castka / roky;
-        splatka = splatka + urok;
+        double splatka = castka / roky + urok;
 
         double celkem = castka;
 
@@ -29,16 +26,14 @@ public class Main {
                 System.out.println("---------------------------------------------------------------------------------------");
                 System.out.println("Mesic: " + i + " Splatka: " + (int)splatka + " Urok: " + (int)urok + " Umor " + (int)umor + " Zustatek " + (int)castka);
 
-                castka = castka - umor;
+                castka -= umor;
 
                 umor = splatka - urok;
 
-                urok = castka / 100;
-                urok = urok * urokProcento;
+                urok = castka * urokProcento / 100;
 
-                celkem = celkem + urok;
-            }
-            else {
+                celkem += urok;
+            } else {
                 System.out.println("=========================================================================================");
                 System.out.println("Mesic: " + i + " Splaceno // Dohramady jste zplatily " + (int)celkem);
                 break;
