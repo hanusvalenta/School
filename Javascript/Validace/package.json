@@ -1,0 +1,11 @@
+{
+  "name": "validace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Hanus Valenta",
+  "license": "ISC",
+  "description": ""
+}
