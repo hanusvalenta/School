@@ -17,14 +17,17 @@ app.post('/submit', (req, res) => {
   
     const nameValid = name.length >= 2 && /^[A-Za-z]+$/.test(name);
     const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const phoneValid = /^\d{1,12}$/.test(phone);
+    const currentYear = new Date().getFullYear();
+    const yearValid = year <= currentYear && year >= currentYear - 120;
   
-    if (!nameValid || !emailValid) {
+    if (!nameValid || !emailValid || !phoneValid || !yearValid) {
       return res.status(400).send("Invalid input data.");
     }
   
     console.log('Form submission:', { name, surname, email, phone, year });
     res.send('Form submitted successfully!');
-  });
+  });  
   
 
 app.listen(port, () => {

@@ -25,4 +25,44 @@
     <button type="submit">Send</button>
   </form>
 </body>
+
+<script>
+    document.getElementById("form").addEventListener("submit", function (e) {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.querySelector('input[name="phone"]').value.trim();
+        const year = parseInt(document.querySelector('input[name="year"]').value);
+    
+        const nameIsValid = name.length >= 2 && /^[A-Za-z]+$/.test(name);
+        const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        const phoneIsValid = /^\d{1,12}$/.test(phone);
+        
+        const currentYear = new Date().getFullYear();
+        const yearIsValid = year <= currentYear && year >= currentYear - 120;
+    
+        if (!nameIsValid) {
+        alert("Name must be at least 2 letters and contain only letters.");
+        e.preventDefault();
+        return;
+        }
+    
+        if (!emailIsValid) {
+        alert("Please enter a valid email address.");
+        e.preventDefault();
+        return;
+        }
+    
+        if (!phoneIsValid) {
+        alert("Phone number must be only digits, up to 12 numbers.");
+        e.preventDefault();
+        return;
+        }
+    
+        if (!yearIsValid) {
+        alert("Please enter a valid year of birth (not in future or older than 120 years).");
+        e.preventDefault();
+        return;
+        }
+    });
+    </script>      
 </html>
