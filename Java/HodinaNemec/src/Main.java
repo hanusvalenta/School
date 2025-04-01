@@ -26,7 +26,7 @@ public class Main {
                 System.out.println("---------------------------------------------------------------------------------------");
                 System.out.println("Mesic: " + i + " Splatka: " + (int)splatka + " Urok: " + (int)urok + " Umor " + (int)umor + " Zustatek " + (int)castka);
 
-                castka -= umor;
+                castka = castka - umor;
 
                 umor = splatka - urok;
 
