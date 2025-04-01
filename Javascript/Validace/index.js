@@ -13,10 +13,19 @@ app.get('/', (req, res) => {
 });
 
 app.post('/submit', (req, res) => {
-  const { name, surname, email, phone, year } = req.body;
-  console.log('Form submission:', { name, surname, email, phone, year });
-  res.send('Form submitted successfully!');
-});
+    const { name, surname, email, phone, year } = req.body;
+  
+    const nameValid = name.length >= 2 && /^[A-Za-z]+$/.test(name);
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  
+    if (!nameValid || !emailValid) {
+      return res.status(400).send("Invalid input data.");
+    }
+  
+    console.log('Form submission:', { name, surname, email, phone, year });
+    res.send('Form submitted successfully!');
+  });
+  
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
