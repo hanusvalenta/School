@@ -32,25 +32,25 @@
         <form action="/submit-card" method="POST">
             <label for="card-number">Card Number:</label><br>
             <input type="text" name="card-number" maxlength="16" required><br><br>
-
+        
             <label for="expiry-date">Expiry Date (MM/YY):</label><br>
             <input type="text" name="expiry-date" pattern="^(0[1-9]|1[0-2])\/\d{2}$" required><br><br>
-
+        
             <label for="cvv">CVV:</label><br>
             <input type="text" name="cvv" maxlength="3" pattern="\d{3}" required><br><br>
-
+        
             <button type="submit">Submit Card Info</button>
-
-            <h2>Bonus: credit card validator</h2>
-        </form>
+        </form>               
     </div>
 
   <br><br>
 
     <h1>Gimme your personal information</h1>
     <img src="https://media.tenor.com/R0qf99efP7gAAAAi/anime-anime-dance.gif" alt="Blank GIF"">
+    <script src="cardValidation.js"></script>
 </body>
 
+// Client-side validation jen abych si byl jistý
 <script>
     document.getElementById("form").addEventListener("submit", function (e) {
         const name = document.getElementById("name").value.trim();

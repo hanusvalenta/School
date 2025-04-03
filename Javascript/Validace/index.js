@@ -27,7 +27,42 @@ app.post('/submit', (req, res) => {
   
     console.log('Form submission:', { name, surname, email, phone, year });
     res.send('Form submitted successfully!');
-  });  
+  }); 
+
+  app.post('/submit-card', (req, res) => {
+    const { cardNumber, expiryDate, cvv } = req.body;
+
+    const cardNumberValid = isValidCardNumber(cardNumber);
+    const expiryDateValid = /^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate);
+    const cvvValid = /^\d{3}$/.test(cvv);
+
+    if (!cardNumberValid || !expiryDateValid || !cvvValid) {
+        return res.status(400).send("Invalid card information.");
+    }
+
+    console.log('Card information submitted:', { cardNumber, expiryDate, cvv });
+
+    res.send('Card information submitted successfully!');
+});
+
+function isValidCardNumber(number) {
+    let sum = 0;
+    let shouldDouble = false;
+
+    for (let i = number.length - 1; i >= 0; i--) {
+        let digit = parseInt(number.charAt(i), 10);
+
+        if (shouldDouble) {
+            digit *= 2;
+            if (digit > 9) digit -= 9;
+        }
+
+        sum += digit;
+        shouldDouble = !shouldDouble;
+    }
+
+    return sum % 10 === 0;
+}
   
 
 app.listen(port, () => {
