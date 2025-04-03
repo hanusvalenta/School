@@ -25,7 +25,6 @@ app.get('/', (req, res) => {
 app.post('/submit', async (req, res) => {
   const { name, surname, email, phone, year } = req.body;
 
-  // Validation
   const nameValid = name.length >= 2 && /^[A-Za-z]+$/.test(name);
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const phoneValid = /^\d{1,12}$/.test(phone);
@@ -37,7 +36,6 @@ app.post('/submit', async (req, res) => {
   }
 
   try {
-    // Send email
     await transporter.sendMail({
       from: `"Form Submission" <${process.env.EMAIL_USER}>`,
       to: process.env.RECIPIENT_EMAIL || process.env.EMAIL_USER,
