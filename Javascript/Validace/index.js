@@ -30,7 +30,13 @@ app.post('/submit', (req, res) => {
   }); 
 
   app.post('/submit-card', (req, res) => {
-    const { cardNumber, expiryDate, cvv } = req.body;
+    console.log('Received data:', req.body);
+
+    const { 'card-number': cardNumber, 'expiry-date': expiryDate, cvv } = req.body;
+
+    if (!cardNumber || !expiryDate || !cvv) {
+        return res.status(400).send("Missing card data.");
+    }
 
     const cardNumberValid = isValidCardNumber(cardNumber);
     const expiryDateValid = /^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate);
