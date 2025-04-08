@@ -1,23 +1,15 @@
 {
-  "name": "chc-javascript",
+  "name": "sql",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jaromirSvejda/chc-javascript.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jaromirSvejda/chc-javascript/issues"
-  },
-  "homepage": "https://github.com/jaromirSvejda/chc-javascript#readme",
+  "description": "",
   "dependencies": {
-    "validator": "^13.12.0"
+    "sqlite3": "^5.1.7"
   }
 }
