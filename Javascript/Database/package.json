@@ -1,17 +1,23 @@
 {
-  "name": "validace",
+  "name": "chc-javascript",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "test"
-  },
-  "author": "Hanus Valenta",
-  "license": "ISC",
   "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaromirSvejda/chc-javascript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaromirSvejda/chc-javascript/issues"
+  },
+  "homepage": "https://github.com/jaromirSvejda/chc-javascript#readme",
   "dependencies": {
-    "body-parser": "^2.2.0",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "nodemailer": "^6.10.0"
+    "validator": "^13.12.0"
   }
 }
