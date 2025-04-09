@@ -22,7 +22,7 @@ function createTable(db) {
         `CREATE TABLE users(
             ID INTEGER PRIMARY KEY AUTOINCREMENT,
             username VARCHAR(50) NOT NULL,
-            password VARCHAR(50) NOT NULL
+            password VARCHAR(100) NOT NULL
         );`
     )
 }
