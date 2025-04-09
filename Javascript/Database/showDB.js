@@ -1,11 +1,9 @@
 const db = require("./db");
 
-db.exec(`
-    SELECT * FROM users;
-`, (err, results) => {
+db.all(`SELECT * FROM users;`, (err, rows) => {
     if (err) {
         console.error("Error executing query:", err);
         return;
     }
-    console.log("Query Results:", results);
+    console.log(rows);
 });
