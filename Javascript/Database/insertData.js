@@ -1,4 +1,8 @@
 const db = require("./db")
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
 
 /*let argumentsCount = process.argv.length;
 let arguments = process.argv.slice(2);
