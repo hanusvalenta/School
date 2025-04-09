@@ -1,5 +1,5 @@
 const sqlite3 = require("sqlite3").verbose();
-const filepath = "./contacts.db";
+const filepath = "./users.db";
 const fs = require("fs");
 
 function createConnection() {
@@ -10,7 +10,6 @@ function createConnection() {
             if (error) {
                 return console.error(error.message);
             }
-            //vytvoření tabulky
             createTable(db);
         });
         console.log("Connection has been established");
@@ -20,11 +19,10 @@ function createConnection() {
 
 function createTable(db) {
     db.exec(
-        `CREATE TABLE contacts(
+        `CREATE TABLE users(
             ID INTEGER PRIMARY KEY AUTOINCREMENT,
-            name VARCHAR(50) NOT NULL,
-            surname VARCHAR(50) NOT NULL,
-            mobile VARCHAR(20) NOT NULL
+            username VARCHAR(50) NOT NULL,
+            password VARCHAR(50) NOT NULL
         );`
     )
 }

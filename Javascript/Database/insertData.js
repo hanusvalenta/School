@@ -1,20 +1,29 @@
-const db = require("./db")
+const db = require("./createDB")
 const bcrypt = require('bcrypt');
+const readline = require('readline');
 const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
 
-/*let argumentsCount = process.argv.length;
-let arguments = process.argv.slice(2);
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-console.log(arguments);
-console.log(argumentsCount);*/
+rl.question('Enter your password: ', (password) => {
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+        if (err) {
+            console.error(err.message);
+        } else {
+            console.log(`Hashed password: ${hash}`);
+        }
+        rl.close();
+    });
+});
 
 function insertRow(){
-    const [name, surname, mobile] = process.argv.slice(2);
+    const [username, hash] = process.argv.slice(2);
     db.run(
-    `INSERT INTO contacts (name, surname, mobile) VALUES (?, ?, ?);`,
-    [name, surname, mobile],
+    `INSERT INTO users (name, surname, mobile) VALUES (?, ?, ?);`,
+    [username, hash],
     function(error){
             if(error){
                 console.error(error.message);
