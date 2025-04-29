@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SQLite Todo App</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 p-4">
+    <h1 class="text-2xl font-bold mb-4">Users</h1>
+    <ul id="users" class="mb-4">
+    </ul>
+
+    <h2 class="text-2xl font-bold mb-4">Tasks</h2>
+    <ul id="tasks" class="mb-4">
+    </ul>
+
+    <script>
+    async function getUsers() {
+        const response = await fetch('/users');
+        const users = await response.json();
+        const usersList = document.getElementById('users');
+        usersList.innerHTML = '';
+        users.forEach(user => {
+            const li = document.createElement('li');
+            li.textContent = `<span class="math-inline">\{user\.name\} \(</span>{user.email})`;
+            usersList.appendChild(li);
+        });
+    }
+
+    async function getTasks() {
+        const response = await fetch('/tasks');
+        const tasks = await response.json();
+        const tasksList = document.getElementById('tasks');
+        tasksList.innerHTML = '';
+        tasks.forEach(task => {
+            const li = document.createElement('li');
+            li.textContent = `${task.description} (Completed: ${task.completed ? 'Yes' : 'No'}, User ID: ${task.user_id})`;
+            tasksList.appendChild(li);
+        });
+    }
+
+    getUsers();
+    getTasks();
+    </script>
+</body>
+</html>
