@@ -1,45 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>SQLite Todo App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQLite Database Example</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
 </head>
-<body class="bg-gray-100 p-4">
-    <h1 class="text-2xl font-bold mb-4">Users</h1>
-    <ul id="users" class="mb-4">
-    </ul>
+<body class="bg-gray-100 p-6">
+    <div class="container max-w-2xl mx-auto bg-white shadow-md rounded-lg p-8">
+        <h1 class="text-3xl font-semibold text-blue-600 text-center mb-6">SQLite Data Example</h1>
 
-    <h2 class="text-2xl font-bold mb-4">Tasks</h2>
-    <ul id="tasks" class="mb-4">
-    </ul>
+        <div class="section mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Users</h2>
+            <ul id="users" class="list-disc list-inside space-y-2">
+                <li class="text-gray-700">Loading users...</li>
+            </ul>
+        </div>
+
+        <div class="section mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Tasks</h2>
+            <ul id="tasks" class="list-disc list-inside space-y-2">
+                <li class="text-gray-700">Loading tasks...</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Add New User</h2>
+            <form id="addUserForm" class="form-container flex flex-col space-y-4">
+                <div>
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                    <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                    <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add User</button>
+            </form>
+        </div>
+    </div>
 
     <script>
-    async function getUsers() {
-        const response = await fetch('/users');
-        const users = await response.json();
-        const usersList = document.getElementById('users');
-        usersList.innerHTML = '';
-        users.forEach(user => {
-            const li = document.createElement('li');
-            li.textContent = `<span class="math-inline">\{user\.name\} \(</span>{user.email})`;
-            usersList.appendChild(li);
-        });
-    }
 
-    async function getTasks() {
-        const response = await fetch('/tasks');
-        const tasks = await response.json();
-        const tasksList = document.getElementById('tasks');
-        tasksList.innerHTML = '';
-        tasks.forEach(task => {
-            const li = document.createElement('li');
-            li.textContent = `${task.description} (Completed: ${task.completed ? 'Yes' : 'No'}, User ID: ${task.user_id})`;
-            tasksList.appendChild(li);
-        });
-    }
+        async function getUsers() {
+            try {
+                const response = await fetch('/users');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const users = await response.json();
+                const usersList = document.getElementById('users');
+                usersList.innerHTML = '';
+                users.forEach(user => {
+                    const li = document.createElement('li');
+                    li.className = "text-gray-700";
+                    li.textContent = `${user.name} (${user.email})`;
+                    usersList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                const usersList = document.getElementById('users');
+                usersList.innerHTML = `<li class="text-red-500">Error: ${error.message}</li>`;
+            }
+        }
 
-    getUsers();
-    getTasks();
+        async function getTasks() {
+            try {
+                const response = await fetch('/tasks');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const tasks = await response.json();
+                const tasksList = document.getElementById('tasks');
+                tasksList.innerHTML = '';
+                tasks.forEach(task => {
+                    const li = document.createElement('li');
+                    li.className = "text-gray-700";
+                    li.textContent = `${task.description} (Completed: ${task.completed ? 'Yes' : 'No'}, User ID: ${task.user_id})`;
+                    tasksList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+                const tasksList = document.getElementById('tasks');
+                tasksList.innerHTML = `<li class="text-red-500">Error: ${error.message}</li>`;
+            }
+        }
+
+        async function addUser(event) {
+            event.preventDefault();
+
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const name = nameInput.value;
+            const email = emailInput.value;
+
+            if (!name || !email) {
+                alert('Please enter both name and email.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email }),
+                });
+                if (!response.ok) {
+                    const errorJson = await response.json();
+                    throw new Error(errorJson.error || `HTTP error! status: ${response.status}`);
+                }
+                alert('User added successfully!');
+                nameInput.value = '';
+                emailInput.value = '';
+            } catch (error) {
+                console.error('Error adding user:', error);
+                alert(`Error adding user: ${error.message}`);
+            }
+        }
+
+        const addUserForm = document.getElementById('addUserForm');
+        addUserForm.addEventListener('submit', addUser);
+
+        getUsers();
+        getTasks();
     </script>
 </body>
 </html>

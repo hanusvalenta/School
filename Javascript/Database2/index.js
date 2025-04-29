@@ -10,7 +10,7 @@ app.use(express.json());
 
 const db = new sqlite3.Database('./mydb.sqlite', (err) => {
     if (err) {
-        console.error("Error connecting to database:", err.message);
+        console.error('Error connecting to database:', err.message);
         process.exit(1);
     }
     console.log('Connected to the SQLite database.');
@@ -19,31 +19,37 @@ const db = new sqlite3.Database('./mydb.sqlite', (err) => {
 
 function createTables() {
     db.serialize(() => {
-        db.run(`CREATE TABLE IF NOT EXISTS users (
+        db.run(
+            `CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE
-        )`, (err) => {
-            if (err) {
-                console.error("Error creating users table:", err.message);
-            } else {
-                console.log("Users table created (or already exists).");
+        )`,
+            (err) => {
+                if (err) {
+                    console.error('Error creating users table:', err.message);
+                } else {
+                    console.log('Users table created (or already exists).');
+                }
             }
-        });
+        );
 
-        db.run(`CREATE TABLE IF NOT EXISTS tasks (
+        db.run(
+            `CREATE TABLE IF NOT EXISTS tasks (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             description TEXT NOT NULL,
             completed BOOLEAN NOT NULL DEFAULT 0,
             user_id INTEGER,
             FOREIGN KEY (user_id) REFERENCES users(id)
-        )`, (err) => {
-            if (err) {
-                console.error("Error creating tasks table:", err.message);
-            } else {
-                console.log("Tasks table created (or already exists).");
+        )`,
+            (err) => {
+                if (err) {
+                    console.error('Error creating tasks table:', err.message);
+                } else {
+                    console.log('Tasks table created (or already exists).');
+                }
             }
-        });
+        );
     });
 }
 
@@ -80,7 +86,7 @@ app.post('/users', (req, res) => {
         res.status(400).json({ error: 'Name and email are required' });
         return;
     }
-    db.run('INSERT INTO users (name, email) VALUES (?, ?)', [name, email], function(err) {
+    db.run('INSERT INTO users (name, email) VALUES (?, ?)', [name, email], function (err) {
         if (err) {
             console.error(err.message);
             if (err.errno === 19) {
@@ -160,23 +166,27 @@ app.get('/tasks/:id', (req, res) => {
 
 app.post('/tasks', (req, res) => {
     const { description, user_id, completed } = req.body;
-     if (!description || user_id === undefined) {
+    if (!description || user_id === undefined) {
         res.status(400).json({ error: 'Description and user_id are required' });
         return;
     }
     const completedValue = completed === undefined ? 0 : completed;
-    db.run('INSERT INTO tasks (description, user_id, completed) VALUES (?, ?, ?)', [description, user_id, completedValue], function(err) {
-        if (err) {
-            console.error(err.message);
-             if (err.errno === 19) {
-                res.status(400).json({ error: 'Foreign key constraint failed (invalid user_id)' });
-            } else {
-                res.status(500).json({ error: 'Internal server error' });
+    db.run(
+        'INSERT INTO tasks (description, user_id, completed) VALUES (?, ?, ?)',
+        [description, user_id, completedValue],
+        function (err) {
+            if (err) {
+                console.error(err.message);
+                if (err.errno === 19) {
+                    res.status(400).json({ error: 'Foreign key constraint failed (invalid user_id)' });
+                } else {
+                    res.status(500).json({ error: 'Internal server error' });
+                }
+                return;
             }
-            return;
+            res.status(201).json({ id: this.lastID, description, user_id, completed: completedValue });
         }
-        res.status(201).json({ id: this.lastID, description, user_id, completed: completedValue });
-    });
+    );
 });
 
 app.put('/tasks/:id', (req, res) => {
@@ -186,22 +196,26 @@ app.put('/tasks/:id', (req, res) => {
         res.status(400).json({ error: 'Description, completed, and user_id are required' });
         return;
     }
-    db.run('UPDATE tasks SET description = ?, completed = ?, user_id = ? WHERE id = ?', [description, completed, user_id, id], (err) => {
-        if (err) {
-            console.error(err.message);
-             if (err.errno === 19) {
-                  res.status(400).json({ error: 'Foreign key constraint failed (invalid user_id)' });
-             } else {
-                res.status(500).json({ error: 'Internal server error' });
-             }
-            return;
+    db.run(
+        'UPDATE tasks SET description = ?, completed = ?, user_id = ? WHERE id = ?',
+        [description, completed, user_id, id],
+        (err) => {
+            if (err) {
+                console.error(err.message);
+                if (err.errno === 19) {
+                    res.status(400).json({ error: 'Foreign key constraint failed (invalid user_id)' });
+                } else {
+                    res.status(500).json({ error: 'Internal server error' });
+                }
+                return;
+            }
+            if (this.changes === 0) {
+                res.status(404).json({ error: 'Task not found' });
+                return;
+            }
+            res.json({ message: 'Task updated successfully', id, description, completed, user_id });
         }
-        if (this.changes === 0) {
-            res.status(404).json({ error: 'Task not found' });
-            return;
-        }
-        res.json({ message: 'Task updated successfully', id, description, completed, user_id });
-    });
+    );
 });
 
 app.delete('/tasks/:id', (req, res) => {
@@ -218,6 +232,10 @@ app.delete('/tasks/:id', (req, res) => {
         }
         res.json({ message: 'Task deleted successfully' });
     });
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(port, () => {
