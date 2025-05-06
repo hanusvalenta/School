@@ -137,6 +137,22 @@ app.delete('/users/:id', (req, res) => {
     });
 });
 
+app.delete('/tasks/:id', (req, res) => {
+    const id = req.params.id;
+    db.run('DELETE FROM tasks WHERE id = ?', [id], (err) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).json({ error: 'Internal server error' });
+            return;
+        }
+        if (this.changes === 0) {
+            res.status(404).json({ error: 'Task not found' });
+            return;
+        }
+        res.json({ message: 'Task deleted successfully' });
+    });
+});
+
 app.get('/tasks', (req, res) => {
     db.all('SELECT * FROM tasks', [], (err, rows) => {
         if (err) {
