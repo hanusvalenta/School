@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQLite Database Example</title>
+    <title>SQLite Databáze</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link href="./style.css" rel="stylesheet">
     <style>
-      body {
-        font-family: 'Inter', sans-serif;
-      }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .edit-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
     </style>
 </head>
+
 <body class="bg-gray-100 p-6">
     <div class="container max-w-2xl mx-auto bg-white shadow-md rounded-lg p-8">
         <h1 class="text-3xl font-semibold text-blue-600 text-center mb-6">Sql databáze</h1>
 
         <div class="mb-6">
-            <label for="user-search" class="block text-gray-700 text-sm font-bold mb-2">Search Users:</label>
+            <label for="user-search" class="block text-gray-700 text-sm font-bold mb-2">Hledat uživatele:</label>
             <input type="text" id="user-search" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
 
         <div class="section mb-6">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Uživatelé v databázi</h2>
-            <ul id="users" class="list-disc list-inside space-y-2">
-                <li class="text-gray-700">Loading users...</li>
+            <ul id="users" class="list-disc list-inside space-y-2"></ul>
+                <li class="text-gray-700">Načítání uživatelů...</li>
             </ul>
         </div>
 
         <div class="section mb-6">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Tasks</h2>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Úkoly</h2>
             <ul id="tasks" class="list-disc list-inside space-y-2">
-                <li class="text-gray-700">Loading tasks...</li>
+                <li class="text-gray-700">Načítání úkolů...</li>
             </ul>
         </div>
-        <div class="section">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Přidat</h2>
+
+        <div class="section"></div>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Přidat uživatele</h2>
             <form id="addUserForm" class="form-container flex flex-col space-y-4">
                 <div>
                     <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Jméno a Přijmení:</label>
@@ -45,160 +61,170 @@
                     <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
                     <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                 </div>
-                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add User</button>
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Přidat uživatele</button>
             </form>
         </div>
     </div>
 
+    <div id="editUserModal" class="edit-form">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upravit uživatele</h2>
+        <form id="editUserForm" class="flex flex-col space-y-4">
+            <div>
+                <label for="edit-name" class="block text-gray-700 text-sm font-bold mb-2">Jméno a Příjmení:</label>
+                <input type="text" id="edit-name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div>
+                <label for="edit-email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                <input type="email" id="edit-email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <input type="hidden" id="edit-user-id">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Uložit změny</button>
+            <button type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="closeEditModal()">Zrušit</button>
+        </form>
+    </div>
+
     <script>
+        async function fetchData(url, options = {}) {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                const errorJson = await response.json();
+                throw new Error(errorJson.error || `HTTP chyba! Stav: ${response.status}`);
+            }
+            return response.json();
+        }
 
         async function getUsers(query = '') {
             try {
-                const response = await fetch(`/users?query=${query}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const users = await response.json();
+                const users = await fetchData(`/users?query=${query}`);
                 const usersList = document.getElementById('users');
-                usersList.innerHTML = '';
-                users.forEach(user => {
-                    const li = document.createElement('li');
-                    li.className = "text-gray-700 flex items-center justify-between py-2";
-                    li.innerHTML = `
-                      <span>${user.name} (${user.email})</span>
-                      <button 
-                          class="delete-btn bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                          data-user-id="${user.id}">
-                          Delete
-                      </button>
-                  `;
-                    usersList.appendChild(li);
-                });
-                document.querySelectorAll('.delete-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const userId = this.dataset.userId;
-                        deleteUser(userId);
-                    });
-                });
+                usersList.innerHTML = users.map(user => `
+                    <li class="text-gray-700 flex items-center justify-between py-2">
+                        <span>${user.name} (${user.email})</span>
+                        <div>
+                            <button class="edit-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2" data-user-id="${user.id}">Upravit</button>
+                            <button class="delete-btn bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-user-id="${user.id}">Smazat</button>
+                        </div>
+                    </li>
+                `).join('');
+                attachUserEventListeners();
             } catch (error) {
-                console.error('Error fetching users:', error);
-                const usersList = document.getElementById('users');
-                usersList.innerHTML = `<li class="text-red-500">Error: ${error.message}</li>`;
+                document.getElementById('users').innerHTML = `<li class="text-red-500">Chyba: ${error.message}</li>`;
             }
         }
 
         async function getTasks() {
             try {
-                const response = await fetch('/tasks');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const tasks = await response.json();
+                const tasks = await fetchData('/tasks');
                 const tasksList = document.getElementById('tasks');
-                tasksList.innerHTML = '';
-                tasks.forEach(task => {
-                    const li = document.createElement('li');
-                     li.className = "text-gray-700 flex items-center justify-between py-2";
-                    li.innerHTML = `
-                        <span>${task.description} (Completed: ${task.completed ? 'Yes' : 'No'}, User ID: ${task.user_id})</span>
-                        <button 
-                            class="delete-btn bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                            data-task-id="${task.id}">
-                            Delete
-                        </button>
-                    `;
-                    tasksList.appendChild(li);
-                });
-                 document.querySelectorAll('.delete-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const taskId = this.dataset.taskId;
-                        deleteTask(taskId);
-                    });
-                });
+                tasksList.innerHTML = tasks.map(task => `
+                    <li class="text-gray-700 flex items-center justify-between py-2">
+                        <span>${task.description} (Dokončeno: ${task.completed ? 'Ano' : 'Ne'}, ID uživatele: ${task.user_id})</span>
+                        <button class="delete-btn bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-task-id="${task.id}">Smazat</button>
+                    </li>
+                `).join('');
+                attachTaskEventListeners();
             } catch (error) {
-                console.error('Error fetching tasks:', error);
-                const tasksList = document.getElementById('tasks');
-                tasksList.innerHTML = `<li class="text-red-500">Error: ${error.message}</li>`;
+                document.getElementById('tasks').innerHTML = `<li class="text-red-500">Chyba: ${error.message}</li>`;
             }
         }
 
         async function addUser(event) {
             event.preventDefault();
-
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const name = nameInput.value;
-            const email = emailInput.value;
-
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
             try {
-                const response = await fetch('/users', {
+                await fetchData('/users', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ name, email }),
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email })
                 });
-                if (!response.ok) {
-                    const errorJson = await response.json();
-                    throw new Error(errorJson.error || `HTTP error! status: ${response.status}`);
-                }
                 alert('Uživatel přidán');
-                nameInput.value = '';
-                emailInput.value = '';
+                document.getElementById('addUserForm').reset();
                 getUsers();
             } catch (error) {
-                console.error('Error při přidávání uživatele:', error);
-                alert(`Error při přidávání uživatele: ${error.message}`);
+                alert(`Chyba při přidávání uživatele: ${error.message}`);
             }
         }
 
         async function deleteUser(id) {
             try {
-                const response = await fetch(`/users/${id}`, {
-                    method: 'DELETE',
-                });
-                if (!response.ok) {
-                    const errorJson = await response.json();
-                    throw new Error(errorJson.error || `HTTP error! status: ${response.status}`);
-                }
+                await fetchData(`/users/${id}`, { method: 'DELETE' });
                 alert('Uživatel smazán');
                 getUsers();
             } catch (error) {
-                console.error('Error při mazání uživatele:', error);
-                alert(`Error při mazání uživatele: ${error.message}`);
+                alert(`Chyba při mazání uživatele: ${error.message}`);
+            }
+        }
+
+        async function updateUser(id, userData) {
+            try {
+                await fetchData(`/users/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+                alert('Uživatel upraven');
+                getUsers();
+                closeEditModal();
+            } catch (error) {
+                alert(`Chyba při úpravě uživatele: ${error.message}`);
             }
         }
 
         async function deleteTask(id) {
             try {
-                const response = await fetch(`/tasks/${id}`, {
-                    method: 'DELETE',
-                });
-                if (!response.ok) {
-                    const errorJson = await response.json();
-                    throw new Error(errorJson.error || `HTTP error! status: ${response.status}`);
-                }
+                await fetchData(`/tasks/${id}`, { method: 'DELETE' });
                 alert('Úkol smazán');
                 getTasks();
             } catch (error) {
-                console.error('Error při mazání úkolu:', error);
-                alert(`Error při mazání úkolu: ${error.message}`);
+                alert(`Chyba při mazání úkolu: ${error.message}`);
             }
         }
 
+        function openEditModal(userId) {
+            const modal = document.getElementById('editUserModal');
+            modal.style.display = 'block';
+            fetchData(`/users/${userId}`).then(user => {
+                document.getElementById('edit-name').value = user.name;
+                document.getElementById('edit-email').value = user.email;
+                document.getElementById('edit-user-id').value = user.id;
+            });
+        }
 
-        const addUserForm = document.getElementById('addUserForm');
-        addUserForm.addEventListener('submit', addUser);
+        function closeEditModal() {
+            document.getElementById('editUserModal').style.display = 'none';
+        }
 
-        const userSearch = document.getElementById('user-search');
-        userSearch.addEventListener('input', (e) => {
-            getUsers(e.target.value);
+        function attachUserEventListeners() {
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', () => deleteUser(button.dataset.userId));
+            });
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', () => openEditModal(button.dataset.userId));
+            });
+        }
+
+        function attachTaskEventListeners() {
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', () => deleteTask(button.dataset.taskId));
+            });
+        }
+
+        document.getElementById('addUserForm').addEventListener('submit', addUser);
+        document.getElementById('editUserForm').addEventListener('submit', event => {
+            event.preventDefault();
+            const id = document.getElementById('edit-user-id').value;
+            const name = document.getElementById('edit-name').value;
+            const email = document.getElementById('edit-email').value;
+            updateUser(id, { name, email });
         });
+        document.getElementById('user-search').addEventListener('input', e => getUsers(e.target.value));
 
         getUsers();
         getTasks();
     </script>
 
-    <img src="https://media.tenor.com/R0qf99efP7gAAAAi/anime-anime-dance.gif" alt="Dancing Anime">
+    <img src="https://media.tenor.com/R0qf99efP7gAAAAi/anime-anime-dance.gif" alt="Tančící Anime">
 </body>
+
 </html>
