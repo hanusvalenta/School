@@ -1,3 +1,4 @@
+// index.js
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
@@ -54,7 +55,17 @@ function createTables() {
 }
 
 app.get('/users', (req, res) => {
-    db.all('SELECT * FROM users', [], (err, rows) => {
+    const { query } = req.query; // Extract the search query
+
+    let sql = 'SELECT * FROM users';
+    let params = [];
+
+    if (query) {
+        sql += ' WHERE name LIKE ? OR email LIKE ?';
+        params = [`%${query}%`, `%${query}%`]; // Add wildcards for partial matching
+    }
+
+    db.all(sql, params, (err, rows) => {
         if (err) {
             console.error(err.message);
             res.status(500).json({ error: 'Internal server error' });
@@ -209,7 +220,6 @@ app.put('/tasks/:id', (req, res) => {
     const id = req.params.id;
     const { description, completed, user_id } = req.body;
     if (!description || user_id === undefined || completed === undefined) {
-        res.status(400).json({ error: 'Description, completed, and user_id are required' });
         return;
     }
     db.run(
@@ -219,17 +229,17 @@ app.put('/tasks/:id', (req, res) => {
             if (err) {
                 console.error(err.message);
                 if (err.errno === 19) {
-                    res.status(400).json({ error: 'Foreign key constraint failed (invalid user_id)' });
+                    res.status(400).json({ error: 'Foreign key selhal (neplatné user_id)' });
                 } else {
                     res.status(500).json({ error: 'Internal server error' });
                 }
                 return;
             }
             if (this.changes === 0) {
-                res.status(404).json({ error: 'Task not found' });
+                res.status(404).json({ error: 'Task nenalezen' });
                 return;
             }
-            res.json({ message: 'Task updated successfully', id, description, completed, user_id });
+            res.json({ message: 'Task upraven', id, description, completed, user_id });
         }
     );
 });
@@ -243,10 +253,10 @@ app.delete('/tasks/:id', (req, res) => {
             return;
         }
         if (this.changes === 0) {
-            res.status(404).json({ error: 'Task not found' });
+            res.status(404).json({ error: 'Task nenalezen' });
             return;
         }
-        res.json({ message: 'Task deleted successfully' });
+        res.json({ message: 'Tast smazán' });
     });
 });
 
