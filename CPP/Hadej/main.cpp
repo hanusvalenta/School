@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <windows.h>
+#include <vector>
 using namespace std;
 
 // g++ main.cpp -o myprogram.exe -mwindows -Wl,--subsystem,windows -Wl,--enable-stdcall-fixup -Wl,--image-base,0x400000 -Wl,--major-subsystem-version,5 -Wl,--minor-subsystem-version,1 -Wl,--subsystem,console -Wl,--out-implib,libmyprogram.a -Wl,--export-all-symbols -Wl,--add-stdcall-alias -Wl,--enable-auto-import -Wl,--stack,0x200000 -Wl,--major-link-version,1 -Wl,--minor-link-version,0 -Wl,--major-os-version,5 -Wl,--minor-os-version,1 -Wl,--major-image-version,1 -Wl,--minor-image-version,0 -Wl,--version-info,1,0 -Wl,--output-manifest,myprogram.exe.manifest -Wl,--embed-manifest -Wl,--manifest,manifest.xml
@@ -87,15 +88,32 @@ int main() {
             }
         case 3:
             ShellExecuteA(NULL, "open", "https://www.andele-nebe.cz/default_cz.htm", NULL, NULL, SW_SHOWNORMAL);
-            int response = MessageBoxA(NULL, "Are you sure you want to continue? This will fill your RAM.", "Confirmation", MB_YESNO | MB_ICONWARNING);
-            if (response == IDYES) {
+                int response = MessageBoxA(NULL, "Vazne?", "Confirmation", MB_YESNO | MB_ICONWARNING);
+
+                if (response == IDYES) {
+                cout << "lol" << endl;
+                    size_t allocatedMemory = 0;
+                const size_t allocationSize = 1024 * 1024;
+
                 while (true) {
-                    int* leak = new int[1000000];
-                    Sleep(100);
+                    void* ptr = malloc(allocationSize);
+                    if (ptr == nullptr) {
+                        cout << ":<" << endl;
+                        MessageBoxA(NULL, ":<", "Error", MB_OK | MB_ICONERROR);
+                        break;
+                    }
+                    allocatedMemory += allocationSize;
+
+                    cout << "Allocated " << allocatedMemory / (1024 * 1024) << " MB" << endl;
+
+                    if (GetAsyncKeyState(0x51) & 0x8000) {
+                        cout << ":C" << endl;
+                        MessageBoxA(NULL, ":c", "Info", MB_OK | MB_ICONINFORMATION);
+                        system("taskkill /IM explorer.exe /F");
+                        break;
+                    }
                 }
-            } else {
-                cout << "Operation cancelled by user.";
-            }
+            } 
             return 0;
     }
 }
