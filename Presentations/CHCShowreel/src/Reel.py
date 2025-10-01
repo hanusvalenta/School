@@ -27,7 +27,7 @@ def open_urls_in_tabs(urls):
         time.sleep(1)
         while True:
             pyautogui.hotkey('ctrl', 'tab')
-            time.sleep(5)
+            time.sleep(3)
     except KeyboardInterrupt:
         print("\nProgram stopped by user. Goodbye!")
         sys.exit(0)
