@@ -1,26 +1,33 @@
 import webbrowser
 import time
 import sys
+import pyautogui
  
 def open_urls_in_tabs(urls):
-    """Opens a list of URLs, each in a new tab."""
     if not urls:
         print("The URL list is empty. Exiting.")
         return
+    cleaned_urls = [url.strip() for url in urls]
  
     print("Opening all URLs in new tabs...")
-    webbrowser.open(urls[0], new=1)
-    for url in urls[1:]:
+    webbrowser.open(cleaned_urls[0], new=1)
+    time.sleep(1)
+    for url in cleaned_urls[1:]:
         print(f"Opening: {url}")
         webbrowser.open(url, new=2)
         time.sleep(1)
  
     print("\nAll URLs have been opened in your browser.")
-    print("The script will now wait. Press Ctrl+C in this terminal to exit.")
+    print("Starting tab cycling in 5 seconds...")
+    print("Press Ctrl+C in this terminal to exit.")
+    time.sleep(5)
  
     try:
+        pyautogui.hotkey('ctrl', '1')
+        time.sleep(1)
         while True:
-            time.sleep(1)
+            pyautogui.hotkey('ctrl', 'tab')
+            time.sleep(5)
     except KeyboardInterrupt:
         print("\nProgram stopped by user. Goodbye!")
         sys.exit(0)
