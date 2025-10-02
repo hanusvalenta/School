@@ -1,0 +1,38 @@
+@font-face {
+    font-family: 'Win';
+    src: url('PhP/PrvniHodina/Font/w95fa.woff2') format('woff2');
+}
+
+body {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    font-family: 'Win', sans-serif;
+    margin: 2em;
+}
+
+h1 {
+    color: #ffffff;
+}
+
+a {
+    color: #90caf9;
+}
+
+a:hover {
+    color: #e3f2fd;
+}
+
+form {
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+input[type="text"],
+input[type="password"] {
+    background-color: #333;
+    color: #f0f0f0;
+    border: 1px solid #555;
+    padding: 8px;
+    border-radius: 4px;
+}
