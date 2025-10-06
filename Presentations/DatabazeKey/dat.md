@@ -89,3 +89,40 @@ redis-cli SET key_name "some value" # Create/Update
 redis-cli GET key_name              # Select
 redis-cli DEL key_name              # Delete
 ```
+
+---
+# Amazon DynamoDB
+- 2012
+- Často porovnávané s MongoDB, Cassandra, Google Bigtable
+- Cloudová služba od AWS
+- Interně napsaná v Java + C++
+- Fully managed NoSQL databáze (key-value + dokumentová)
+- Škálovatelná, vysoká dostupnost, podpora sekundárních indexů
+
+*https://db-engines.com/en/system/Amazon+DynamoDB
+*https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/
+
+---
+## Amazon DynamoDB - Syntax (AWS CLI)
+``` # Create table (s jedním primárním klíčem - partition key)
+aws dynamodb create-table \
+    --table-name MyTable \
+    --attribute-definitions AttributeName=key_name,AttributeType=S \
+    --key-schema AttributeName=key_name,KeyType=HASH \
+    --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
+
+# Insert (PutItem)
+aws dynamodb put-item \
+    --table-name MyTable \
+    --item '{"key_name": {"S": "some_key"}, "value": {"S": "some value"}}'
+
+# Get item
+aws dynamodb get-item \
+    --table-name MyTable \
+    --key '{"key_name": {"S": "some_key"}}'
+
+# Delete item
+aws dynamodb delete-item \
+    --table-name MyTable \
+    --key '{"key_name": {"S": "some_key"}}'
+```
