@@ -1,41 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>Test</title>
+    <title>Formulář</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Test</h1>
+    <div class="formHead">
+        <h1>Formulář</h1>
+        <img src="Form.jpg" style="scale: 0.1">
+    </div>
 
     <form action="index.php" method="get">
-        <input type="text" name="text">
-        <input type="password" name="heslo">
-
+        <div class="formbox">
+            Jmeno/Nick:   <input type="text" name="jmeno">
+        </div>
         <br>
-        <input type="checkbox" name="check" value="check" checked>
+        <div class="formbox">
+            Email:   <input type="email" name="email">
+        </div>
+        <br>
+        <div class="formbox">
+            Heslo:   <input type="password" name="heslo">
+        </div>
+        <br>
+        <div class="formbox">
+            Heslo znovu:   <input type="password" name="heslo2">
+        </div>
+        <br>
+        <div class="formbox">
+            Telefon:   <input type="tel" name="tel">
+        </div>
+        <br>
+        <div class="formbox">
+            Fotka:   <input type="file" accept="image/*">
+        </div>
+        <br>
+        <div class="formbox">
+            Vek:   <input type="date" name="Vek">
+        </div>
+        <br>
+        <div class="formbox">
+            Pohlavi:   <select name="pohlavi">
+                <option>Muz</option>
+                <option>Zena</option>
+                <option>Bojova helikoptera</option>
+            </select>
+        </div>
+        <br>
+        <div class="formbox">
+            <input type="checkbox" name="spam" checked> Chci dostavat zip bomby do emailu
+        </div>
+        <br>
+        <br>
 
-        <input type="radio" name="radio" value="on" checked>
-        <input type="radio" name="radio" value="off">
-
-        <input type="file" name="file">
-
-        <select name="select" size="5" multiple>
-            <option value="lol">lol</option>
-            <option value="nah">lol</option>
-        </select>
-
-        <input type="submit" name="submit">
+        <input type="submit" name="odeslat" value="Odeslat">
     </form>
 
     <?php
     if(isset($_GET['submit'])){
-        $radio = $_GET['radio'];
-        if ($radio == 'on') {
-            echo "😀";
-        }
-        else if ($radio == 'off') {
-            echo "🤨";
-        }
+
     }
     ?>
 </body>

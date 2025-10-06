@@ -3,15 +3,33 @@
     src: url('PhP/PrvniHodina/Font/w95fa.woff2') format('woff2');
 }
 
+html {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 body {
     background-color: #1a1a1a;
     color: #f0f0f0;
     font-family: 'Win', sans-serif;
     margin: 2em;
+    text-align: center;
+    width: 20vw;
+    height: auto;
 }
 
 h1 {
     color: #ffffff;
+}
+
+.formbox {
+    background-color: #2b2d30;
+    padding: 1vh;
+    width: 15vw;
+    height: auto;
+    border-radius: 25px;
+    margin-bottom: 1vh;
 }
 
 a {
@@ -25,7 +43,19 @@ a:hover {
 form {
     background-color: #2c2c2c;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formHead {
+    background-color: #43454a;
+    padding: 1vh;
+    width: 15vw;
+    height: 10vh;
+    border-radius: 25px;
+    margin-bottom: 1vh;
 }
 
 input[type="text"],
