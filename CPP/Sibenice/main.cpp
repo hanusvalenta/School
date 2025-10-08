@@ -1,55 +1,97 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
+#include <cctype>
 using namespace std;
 
 int main() {
-    string Veta = "Epstein se nezabil";
-    string ZobrazenaVeta(Veta.length(), '_');
-    string UhodnutePismena = "";
-    bool Uhodl = false;
-    int PocetPokusu = 10;
+    srand(time(0));
 
-    for (int i = 0; i < Veta.length(); ++i) {
-        if (Veta[i] == ' ') {
-            ZobrazenaVeta[i] = ' ';
+    vector<string> Vety = {
+        "Epstein se nezabil", "Chemtrails umyslne","Alieni mezi námi", "jedenact zari kontrolovaný výbuch", "Covid laboratorni unik",
+        "Media kontrolovana", "Moon landing falesne", "Izrael hladomor taktika", "Vacciny nebezpecne", "Dukazy zniceny",
+        "JFK vrazda planovana", "Rwanda genocida hutu", "Iraq valka falešna", "Area padesatjedna UFO", "Scientology tajne dokumenty",
+        "Waco ohniva strelba", "Ruby Ridge FBI", "Jonestown masakr", "Raeliani klonovani", "Moonie svatby"
+    };
+
+    bool hratZnovu = true;
+    while (hratZnovu) {
+        string Veta = Vety[rand() % Vety.size()];
+
+        string ZobrazenaVeta(Veta.length(), '_');
+
+        for (int i = 0; i < Veta.length(); ++i) {
+            if (Veta[i] == ' ') {
+                ZobrazenaVeta[i] = ' ';
+            }
         }
-    }
 
-    while (!Uhodl) {
-        cout << "Veta: " << ZobrazenaVeta << endl;
-        cout << "Hadej pismeno" << endl;
-        char Pismeno;
-        cout << "Hadane pismena: " << UhodnutePismena << endl;
-        cout << "Mas jeste: " << PocetPokusu << " pokusu" << endl;
+        string UhodnutePismena = "";
+        bool Uhodl = false;
+        int PocetPokusu = 10;
 
-        cin >> Pismeno;
+        while (PocetPokusu > 0 && Uhodl == false) {
+            cout << "Veta: " << ZobrazenaVeta << endl;
+            cout << "Hadej pismeno" << endl;
+            cout << "Hadane pismena: " << UhodnutePismena << endl;
+            cout << "Mas jeste: " << PocetPokusu << " pokusu" << endl;
 
-        for (int i = 0; i < Veta.length(); i++) {
-            if (Pismeno == UhodnutePismena[i]) {
-                cout << Pismeno << " Si uz hadal" << endl;
-                PocetPokusu++;
+            string input;
+            cin >> input;
+
+            if (input.length() != 1 || isalpha(input[0]) == false) {
+                cout << "Neplatny vstup zadej prosim jenom jedno pismeno" << endl;
+                cin.clear();
             }
-            else if (Pismeno == Veta[i]) {
-                ZobrazenaVeta[i] = Pismeno;
-                PocetPokusu++;
+
+            char Pismeno = tolower(input[0]);
+
+            if (UhodnutePismena.find(Pismeno) != string::npos) {
+                cout << "Pismeno '" << Pismeno << "' jsi uz zkusil" << endl;
+                continue;
             }
-            else if (i == Veta.length() - 1) {
+
+            UhodnutePismena += Pismeno;
+            UhodnutePismena += ' ';
+
+            bool pismenoNalezeno = false;
+            for (int i = 0; i < Veta.length(); i++) {
+                if (tolower(Veta[i]) == Pismeno) {
+                    ZobrazenaVeta[i] = Veta[i];
+                    pismenoNalezeno = true;
+                }
+            }
+
+            if (pismenoNalezeno) {
+                cout << "Spravne" << endl;
+            } else {
                 PocetPokusu--;
             }
+
+            if (ZobrazenaVeta == Veta) {
+                Uhodl = true;
+            }
         }
 
-        UhodnutePismena += Pismeno;
-
-        if (PocetPokusu == 0) {
+        if (Uhodl == true) {
+            cout << "Gratuluju, uhodl jsi! :3" << endl;
+        } else {
             cout << "Prohral jsi :c" << endl;
             cout << "Hadane slovo bylo: " << Veta << endl;
-            exit(0);
         }
 
-        if (ZobrazenaVeta == Veta) {
-            cout << "Gratuluju uhodl jsi :3c" << endl;
-            Uhodl = true;
+        cout << "Chces hrat znovu? (ano/ne): ";
+        string odpoved;
+        cin >> odpoved;
+
+        if (odpoved == "ano" || odpoved == "Ano") {
+            hratZnovu = true;
+        }
+        else {
+            hratZnovu = false;
         }
     }
+
+    return 0;
 }

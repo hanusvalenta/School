@@ -1,4 +1,8 @@
 {
     "java.debug.settings.onBuildFailureProceed": true,
-    "cmake.sourceDirectory": "C:/Users/hans/Documents/Projects/School/CPP/Hadej"
+    "cmake.sourceDirectory": "C:/Users/hans/Documents/Projects/School/CPP/Hadej",
+    "files.associations": {
+        "ctime": "cpp",
+        "ostream": "cpp"
+    }
 }
