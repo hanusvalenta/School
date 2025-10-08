@@ -9,10 +9,7 @@ int main() {
     srand(time(0));
 
     vector<string> Vety = {
-        "Epstein se nezabil", "Chemtrails umyslne","Alieni mezi námi", "jedenact zari kontrolovaný výbuch", "Covid laboratorni unik",
-        "Media kontrolovana", "Moon landing falesne", "Izrael hladomor taktika", "Vacciny nebezpecne", "Dukazy zniceny",
-        "JFK vrazda planovana", "Rwanda genocida hutu", "Iraq valka falešna", "Area padesatjedna UFO", "Scientology tajne dokumenty",
-        "Waco ohniva strelba", "Ruby Ridge FBI", "Jonestown masakr", "Raeliani klonovani", "Moonie svatby"
+        "Epstein se nezabil", "Chemtrails umyslne","Alieni mezi námi", "jedenact zari kontrolovaný výbuch", "Covid laboratorni unik","Media kontrolovana", "Moon landing falesne", "Izrael hladomor taktika", "Vacciny nebezpecne", "Dukazy zniceny","JFK vrazda planovana", "Rwanda genocida hutu", "Iraq valka falesna", "Area padesatjedna UFO", "Scientology tajne dokumenty","Waco ohniva strelba", "Ruby Ridge FBI", "Jonestown masakr", "Raeliani klonovani", "Moonie svatby"
     };
 
     bool hratZnovu = true;
@@ -40,14 +37,23 @@ int main() {
             string input;
             cin >> input;
 
-            if (input.length() != 1 || isalpha(input[0]) == false) {
+            if (input.length() != 1 || input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "/" || input == "11" || input == "." || input == "." || input == ";" || input == "[" || input == "]") {
                 cout << "Neplatny vstup zadej prosim jenom jedno pismeno" << endl;
                 cin.clear();
+                PocetPokusu++; // tohle tu musi byt jinak mizi pokus i kdyz je spatny vstup
             }
 
             char Pismeno = tolower(input[0]);
 
-            if (UhodnutePismena.find(Pismeno) != string::npos) {
+            bool uzHadal = false;
+            for (char hadanePismeno : UhodnutePismena) {
+                if (hadanePismeno == Pismeno) {
+                    uzHadal = true;
+                    break;
+                }
+            }
+
+            if (uzHadal) {
                 cout << "Pismeno '" << Pismeno << "' jsi uz zkusil" << endl;
                 continue;
             }
@@ -66,6 +72,7 @@ int main() {
             if (pismenoNalezeno) {
                 cout << "Spravne" << endl;
             } else {
+                cout << "Nope to ne" << endl;
                 PocetPokusu--;
             }
 
