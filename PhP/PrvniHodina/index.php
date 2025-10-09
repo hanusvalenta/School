@@ -5,60 +5,78 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="formHead">
-        <h1>Formulář</h1>
-        <img src="Form.jpg" style="scale: 0.1">
-    </div>
+    <form action="index.php" method="get" class="form">
+        <div class="form-control">
+            <input class="input input-alt" placeholder="Jmeno" required="" type="text" name="name">
+            <span class="input-border input-border-alt"></span>
+        </div>
+        <div class="form-control">
+            <input class="input input-alt" placeholder="Nick" required="" type="text" name="name">
+            <span class="input-border input-border-alt"></span>
+        </div>
+        <br>
+        <div class="form-control">
+            <input class="input input-alt" placeholder="Email" required="" type="email" name="email">
+            <span class="input-border input-border-alt"></span>
+        </div>
+        <br>
+        <div class="form-control">
+            <input class="input input-alt" placeholder="Heslo" required="" type="password" name="password">
+            <span class="input-border input-border-alt"></span>
+        </div>
+        <br>
+        <div class="form-control">
+            <input class="input input-alt" placeholder="Heslo znovu" required="" type="password" name="password">
+            <span class="input-border input-border-alt"></span>
+        </div>
+        <br>
+        <div class="form-control">
+            <input class="input input-alt" placeholder="Telefon" required="" type="tel" name="password">
+            <span class="input-border input-border-alt"></span>
+        </div>
+        <br>
+        <div class="form-control">
+            <input class="input input-alt" placeholder="Soubor" required="" type="file" name="password">
+            <span class="input-border input-border-alt"></span>
+        </div>
+        <br>
+        <div class="form-control">
+            <input class="input input-alt" placeholder="Věk" required="" type="date" name="password">
+            <span class="input-border input-border-alt"></span>
+        </div>
+        <br>
+        <div class="mydict">
+            <div>
+                <label>
+                    <input type="radio" name="radio" checked="">
+                    <span>Můž</span>
+                </label>
+                <label>
+                    <input type="radio" name="radio">
+                    <span>Žena</span>
+                </label>
+                <label>
+                    <input type="radio" name="radio">
+                    <span>Něco</span>
+                </label>
 
-    <form action="index.php" method="get">
-        <div class="formbox">
-            Jmeno/Nick:   <input type="text" name="jmeno">
+            </div>
         </div>
         <br>
-        <div class="formbox">
-            Email:   <input type="email" name="email">
-        </div>
-        <br>
-        <div class="formbox">
-            Heslo:   <input type="password" name="heslo">
-        </div>
-        <br>
-        <div class="formbox">
-            Heslo znovu:   <input type="password" name="heslo2">
-        </div>
-        <br>
-        <div class="formbox">
-            Telefon:   <input type="tel" name="tel">
-        </div>
-        <br>
-        <div class="formbox">
-            Fotka:   <input type="file" accept="image/*">
-        </div>
-        <br>
-        <div class="formbox">
-            Vek:   <input type="date" name="Vek">
-        </div>
-        <br>
-        <div class="formbox">
-            Pohlavi:   <select name="pohlavi">
-                <option>Muz</option>
-                <option>Zena</option>
-                <option>Bojova helikoptera</option>
-            </select>
-        </div>
-        <br>
-        <div class="formbox">
-            <input type="checkbox" name="spam" checked> Chci dostavat zip bomby do emailu
-        </div>
+        Spam?
+        <label class="container">
+            <input type="checkbox" checked="checked">
+            <div class="checkmark"></div>
+        </label>
         <br>
         <br>
 
-        <input type="submit" name="odeslat" value="Odeslat">
+        <input type="submit" class="primary-button" name="odeslat" value="Odeslat">
     </form>
 
     <?php
     if(isset($_GET['submit'])){
-
+        
     }
     ?>
 </body>
