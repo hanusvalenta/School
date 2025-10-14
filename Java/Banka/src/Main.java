@@ -4,38 +4,113 @@ public class Main {
     public static void main(String[] args) {
         System.out.println((char)27 + "[39;43m" + "Vítej v LBank konsolovém interface \n");
 
-        String maUcet = "false";
-
+        Ucet aktualniUcet = null;
+        Uver uverSluzba = new Uver(); 
+        
+        Scanner input = new Scanner(System.in);
 
         while(true){
-            System.out.println("\nProsím zadej akci: \n1. Založit nebo zobrazit účet\n2. Založit nebo kontokorent účet\n3. Dostat úver\n4. Odejit");
-
-            Scanner input = new Scanner(System.in);
-            int Akce = input.nextInt();
-
-            while (Akce < 1 || Akce > 4) {
-                System.out.println("Neplatná akce prosím zadej novou: \n1. Založit nebo zobrazit účet\n2. Založit nebo kontokorent účet\n3. Dostat úver");
-                Akce = input.nextInt();
+            if (aktualniUcet == null) {
+                System.out.println("1. Založit účet");
+            } else if (aktualniUcet instanceof Kontokorent) {
+                 System.out.println("1. Zobrazit | pracovat s kontokorent účtem");
+                 System.out.println("2. Zrušit kontokorent | Info");
+            } else {
+                 System.out.println("1. Zobrazit | pracovat s účtem");
+                 System.out.println("2. Založit kontokorent účet");
             }
+            System.out.println("3. Dostat | zplatit úvěr");
+            System.out.println("4. Exit");
+            System.out.print("Zadej číslo akce: ");
+
+            int Akce = 0;
+            
+            if (input.hasNextInt()){
+                Akce = input.nextInt();
+                input.nextLine(); 
+            } else {
+                System.out.println("Neplatný input");
+                input.nextLine();
+                continue;
+            }
+
+            if (Akce < 1 || Akce > 4) {
+                System.out.println("Neplatný input");
+                continue;
+            }
+
+            if (Akce > 1 && aktualniUcet == null) {
+                System.out.println("Účet nenalezen :c");
+                continue;
+            }
+            
             switch (Akce){
                 case 1:
-                    if(maUcet.equals("false")){
-                        System.out.println("Ucet nenalezen -- Zakladam novi Ucet");
-                        Ucet ucet = new Ucet();
-                        ucet.main(new String[]{maUcet});
-                        maUcet = "True";
+                    if(aktualniUcet == null){
+                        aktualniUcet = new Ucet(); 
+                    } else {
+                        aktualniUcet.Interakce(input);
                     }
-                    if(maUcet.equals("true")){
-                        System.out.println("Ucet nalezen");
-                        Ucet ucet = new Ucet();
-                        ucet.main(new String[]{maUcet});
-                    }
-                case 2:
-
-                case 3:
-
-                case 4:
                     break;
+                case 2:
+                    if(aktualniUcet instanceof Kontokorent) {
+                        System.out.println("Zrušit kontokorent? Ano | Ne | Info");
+                        String volba = input.nextLine().toLowerCase();
+                        
+                        if (volba.equals("ano")) {
+                            if (aktualniUcet.getZustatek() < 0) {
+                                System.out.println("Nemůžete zrušit dokud jste v dluhu");
+                            } else {
+                                Ucet novyUcet = new Ucet();
+                                novyUcet.Vklad(aktualniUcet.getZustatek()); 
+                                novyUcet.setDluhUveru(aktualniUcet.getDluhUveru()); 
+                                
+                                aktualniUcet = novyUcet;
+                                System.out.println("Kontokorent zrušen nyní máte normální účet");
+                            }
+                        } else {
+                           ((Kontokorent) aktualniUcet).InfoKontokorent();
+                        }
+                        
+                    } else {
+                        int limit = -1000000;
+
+                        Kontokorent novyKontokorent = new Kontokorent(limit);
+
+                        novyKontokorent.Vklad(aktualniUcet.getZustatek()); 
+                        novyKontokorent.setDluhUveru(aktualniUcet.getDluhUveru()); 
+                        
+                        aktualniUcet = novyKontokorent;
+                        System.out.println("Založen kontokorent s limitem " + limit + " kč");
+                    }
+                    break;
+                case 3:
+                    System.out.println("1. Vybrat úvěr\n2. Zplatit úvěr\n3. Info");
+                    System.out.print("Vyber akci: ");
+                    
+                    if (input.hasNextInt()){
+                        int uverAkce = input.nextInt();
+                        input.nextLine();
+                        switch (uverAkce){
+                            case 1:
+                                uverSluzba.PoptatUver(aktualniUcet);
+                                break;
+                            case 2:
+                                uverSluzba.SplatitUver(aktualniUcet);
+                                break;
+                            case 3:
+                                uverSluzba.InfoUver(aktualniUcet);
+                                break;
+                            default:
+                                System.out.println("Špatný input");
+                        }
+                    } else {
+                        System.out.println("Špatný input");
+                        input.nextLine();
+                    }
+                    break;
+                case 4:
+                    return;
             }
         }
     }
