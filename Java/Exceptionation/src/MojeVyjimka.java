@@ -1,7 +1,11 @@
-package PACKAGE_NAME;
-
 public class MojeVyjimka extends RuntimeException {
-  public MojeVyjimka(String message) {
-    super(message);
-  }
+    String text;
+
+    public MojeVyjimka(String text) {
+        this.text = text;
+    }
+
+    public String toString() {
+        return text;
+    }
 }
