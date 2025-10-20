@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Ucet {
-    private int cisloUctu;
+    private int cisloBUctu;
     private String jmenoKlienta;
     private String adresaKlienta;
     private boolean maKarta;
@@ -10,16 +10,25 @@ public class Ucet {
 
     private int dluhUveru = 0;
 
-    public Ucet() {
+    public Ucet(int cisloUctu) {
         Random rand = new Random();
-        this.cisloUctu = rand.nextInt(9000000) + 1000000;
+        if (cisloUctu == 0) {
+            this.cisloBUctu = rand.nextInt(9000000) + 1000000;
+        }
+        else {
+            this.cisloBUctu = cisloUctu;
+        }
         this.jmenoKlienta = "Mirek Umtrlich";
         this.adresaKlienta = "Hnevotinska 67";
         this.maKarta = false;
         this.zustatek = 0;
-        System.out.println("Bankovní účet založen | číslo: " + this.cisloUctu);
+        System.out.println("Bankovní účet založen | číslo: " + this.cisloBUctu);
     }
     
+    public int getcisloBUctu() {
+        return cisloBUctu;
+    }
+
     public int getZustatek() {
         return zustatek;
     }
@@ -37,7 +46,10 @@ public class Ucet {
     }
 
     public void Vyber(int castka){
-        if (this.zustatek >= castka) {
+        if (castka < 0) {
+            System.out.println("Dobry pokus zmrde");
+        }
+        else if (this.zustatek >= castka) {
             this.zustatek -= castka;
             System.out.println("Výběr " + castka + " kč proběhl ok | nový zůstatek: " + this.zustatek + " kč");
         } else {
@@ -76,11 +88,16 @@ public class Ucet {
         }
         
         System.out.println("\n--- Info učet ---");
-        System.out.println("Číslo: " + this.cisloUctu);
+        System.out.println("Číslo: " + this.cisloBUctu);
         System.out.println("Jméno: " + this.jmenoKlienta);
         System.out.println("Adresa: " + this.adresaKlienta);
         System.out.println("Karta: " + (this.maKarta));
-        System.out.println("Zůstatek: " + this.zustatek + " kč");
+        if (this.zustatek <= 0) {
+            System.out.println("Zůstatek: " + "0" + " kč");
+        }
+        else {
+            System.out.println("Zůstatek: " + this.zustatek + " kč");
+        }
         if(this.dluhUveru > 0) {
             System.out.println("Ještě nemáš zplacený úvěr - " + this.dluhUveru + " kč");
         }
@@ -113,7 +130,7 @@ public class Ucet {
                 }
                 break;
             case 2:
-                System.out.println("Zadej kolik vybrat:");
+                System.out.println("Zadej kolik vlozit:");
                 if (input.hasNextInt()){
                     Vklad(input.nextInt());
                     input.nextLine();

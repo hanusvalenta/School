@@ -4,8 +4,8 @@ public class Kontokorent extends Ucet {
     
     private int limitKontokorentu;
 
-    public Kontokorent(int limit) {
-        super();
+    public Kontokorent(int limit, int cisloUctu) {
+        super(cisloUctu);
         this.limitKontokorentu = limit;
     }
     
@@ -16,10 +16,13 @@ public class Kontokorent extends Ucet {
     @Override
     public void Vyber(int castka){
         int novyZustatek = zustatek - castka;
-        
-        if (novyZustatek >= this.limitKontokorentu) {
+
+        if (castka < 0) {
+            System.out.println("Dobry pokus zmrde");
+        }
+        else if (novyZustatek >= this.limitKontokorentu) {
             this.zustatek = novyZustatek;
-            System.out.println("Výběr " + castka + " kč | Nový zůstatek: " + this.zustatek + " kč");
+            System.out.println("Výběr " + castka + " kč | Nový zůstatek: " + "0" + " kč" + " | dluh vuci kontokorentu: " + novyZustatek);
             if (this.zustatek < 0) {
                 System.out.println("Jsi v kontokorentu | Do max zbývá " + (this.zustatek - this.limitKontokorentu) + " kč.");
             }
@@ -35,17 +38,21 @@ public class Kontokorent extends Ucet {
             return;
         }
         
-        if (zustatek < 0) {
+        if (zustatek < 0 && castka <= this.zustatek) {
+            int novyZustatek = zustatek + castka;
+            this.zustatek = novyZustatek;
             int dluhKeSplaceni = Math.abs(zustatek);
             int splaceno = Math.min(castka, dluhKeSplaceni); 
             
             zustatek += castka;
-            System.out.println("Vklad " + castka + " kč ok " + splaceno + " kč splaceno");
+            System.out.println("Vlad " + castka + " kč | Nový zůstatek: " + "0" + " kč" + " | dluh vuci kontokorentu: " + novyZustatek);
             
         } else {
             super.Vklad(castka);
         }
-        System.out.println("Zůstatek: " + this.zustatek + " kč");
+        if (zustatek > 0) {
+            System.out.println("Zůstatek: " + this.zustatek + " kč");
+        }
     }
 
     public void InfoKontokorent(){

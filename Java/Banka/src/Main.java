@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println((char)27 + "[39;43m" + "Vítej v LBank konsolovém interface \n");
+        System.out.println((char)27 + "[30;43m" + "Vítej v LBank konsolovém interface \n");
 
         Ucet aktualniUcet = null;
         Uver uverSluzba = new Uver(); 
@@ -47,7 +47,7 @@ public class Main {
             switch (Akce){
                 case 1:
                     if(aktualniUcet == null){
-                        aktualniUcet = new Ucet(); 
+                        aktualniUcet = new Ucet(0);
                     } else {
                         aktualniUcet.Interakce(input);
                     }
@@ -61,7 +61,7 @@ public class Main {
                             if (aktualniUcet.getZustatek() < 0) {
                                 System.out.println("Nemůžete zrušit dokud jste v dluhu");
                             } else {
-                                Ucet novyUcet = new Ucet();
+                                Ucet novyUcet = new Ucet(aktualniUcet.getcisloBUctu());
                                 novyUcet.Vklad(aktualniUcet.getZustatek()); 
                                 novyUcet.setDluhUveru(aktualniUcet.getDluhUveru()); 
                                 
@@ -73,9 +73,9 @@ public class Main {
                         }
                         
                     } else {
-                        int limit = -1000000;
+                        int limit = -10000;
 
-                        Kontokorent novyKontokorent = new Kontokorent(limit);
+                        Kontokorent novyKontokorent = new Kontokorent(limit, aktualniUcet.getcisloBUctu());
 
                         novyKontokorent.Vklad(aktualniUcet.getZustatek()); 
                         novyKontokorent.setDluhUveru(aktualniUcet.getDluhUveru()); 
