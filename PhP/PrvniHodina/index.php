@@ -1,3 +1,10 @@
+<?php
+    function Redirect($url, $permanent = false)
+    {
+        header('Location: ' . $url, true, $permanent ? 301 : 302);
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -6,14 +13,48 @@
 </head>
 <body>
 <?php
-if ($_GET["odeslat"]) {
-    if ($_FILES["file"]) {
-        copy($_FILES["file"]["tmp_name"], "files/" . $_FILES["file"]["name"]);
-        echo "nahran";
+$IsCompelete = false;
+
+if (isset($_GET["odeslat"])) {
+    if (isset($_GET["name"]) && $_GET["name"] != "" && isset($_GET["nick"]) && $_GET["nick"] != "" && isset($_GET["email"]) && $_GET["email"] != "" && isset($_GET["password"]) && $_GET["password"] != "" &&isset($_GET["password2"]) && $_GET["password2"] != "" &&isset($_GET["tel"]) && $_GET["tel"] != "" &&isset($_GET["soubor"]) && $_GET["soubor"] != "" &&isset($_GET["age"]) && $_GET["age"] != "" && $_GET["radio"] == "m" &&isset($_GET["checkbox"]) && $_GET["checkbox"] != "") {
+        $IsCompelete = true;
+    }
+
+    if ($IsCompelete == false) {
+        echo "Vypln vsechy pole";
+    }
+    if ($IsCompelete == true) {
+        echo $_GET["name"];
+        echo "<br>";
+        echo $_GET["nick"];
+        echo "<br>";
+        echo $_GET["email"];
+        echo "<br>";
+        echo $_GET["password"];
+        echo "<br>";
+        echo $_GET["password2"];
+        echo "<br>";
+        echo $_GET["tel"];
+        echo "<br>";
+        echo $_GET["soubor"];
+        echo "<br>";
+        echo $_GET["age"];
+        echo "<br>";
+            
+        
+
+        echo "<br>";
+        echo $_GET["age"];
+        echo "<br>";
+        echo $_GET["radio"];
+        echo "<br>";
+        echo $_GET["checkbox"];
+        echo "<br>";
+
     }
 }
 
-if (!$_GET) {
+if (!$IsCompelete) {
 ?>
 <form action="<?php $_SERVER["PHP_SELF"]?>" method="get" enctype="multipart/form-data">
     <div class="form-control">
@@ -46,7 +87,7 @@ if (!$_GET) {
     </div>
     <br>
     <div class="form-control">
-        <input class="input input-alt" placeholder="Soubor" type="file" name="file">
+        <input class="input input-alt" placeholder="Soubor" type="file" name="soubor">
         <span class="input-border input-border-alt"></span>
     </div>
     <br>
@@ -58,15 +99,15 @@ if (!$_GET) {
     <div class="mydict">
         <div>
             <label>
-                <input type="radio" name="radio" checked="">
+                <input type="radio" name="radio" checked="" value="m">
                 <span>Můž</span>
             </label>
             <label>
-                <input type="radio" name="radio">
+                <input type="radio" name="radio" value="f">
                 <span>Žena</span>
             </label>
             <label>
-                <input type="radio" name="radio">
+                <input type="radio" name="radio" value="n">
                 <span>Něco</span>
             </label>
 
@@ -75,7 +116,7 @@ if (!$_GET) {
     <br>
     Spam?
     <label class="container">
-        <input type="checkbox" checked="checked">
+        <input type="checkbox" checked="checked" name="checkbox">
         <div class="checkmark"></div>
     </label>
     <br>
