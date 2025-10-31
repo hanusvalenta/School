@@ -13,10 +13,47 @@
 </head>
 <body>
 <?php
+define("ROOT_DIR", dirname(__FILE__));
+
+function wc_upload_image_return_url($image_submit) {
+    if (empty($image_submit) || $image_submit['error'] != 0) {
+        return "Nic nenahrano";
+    }
+
+    $fileType = $image_submit["type"];
+    $fileSize = $image_submit["size"];
+
+    if ($fileSize / 1024 > 2048) {
+        return "File size must be less than 2MB.";
+    }
+
+    $allowedTypes = [
+            "image/png", "image/gif", "image/jpg", "image/jpeg",
+            "application/pdf", "application/zip",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ];
+
+    if (!in_array($fileType, $allowedTypes)) {
+        return "Spatny typ souboru";
+    }
+
+    $filename = date("Y_m_d_H_i_s") . $image_submit["name"];
+    $uploadPath = ROOT_DIR . "/uploads/" . $filename;
+
+    if (is_uploaded_file($image_submit["tmp_name"])) {
+        if (!move_uploaded_file($image_submit["tmp_name"], $uploadPath)) {
+            return "Error moving file.";
+        }
+        return "uploads/" . $filename;
+    } else {
+        return "Possible file upload attack.";
+    }
+}
+
 $IsCompelete = false;
 
-if (isset($_GET["odeslat"])) {
-    if (isset($_GET["name"]) && $_GET["name"] != "" && isset($_GET["nick"]) && $_GET["nick"] != "" && isset($_GET["email"]) && $_GET["email"] != "" && isset($_GET["password"]) && $_GET["password"] != "" &&isset($_GET["password2"]) && $_GET["password2"] != "" &&isset($_GET["tel"]) && $_GET["tel"] != "" &&isset($_GET["soubor"]) && $_GET["soubor"] != "" &&isset($_GET["age"]) && $_GET["age"] != "" && $_GET["radio"] == "m" &&isset($_GET["checkbox"]) && $_GET["checkbox"] != "") {
+if (isset($_POST["odeslat"])) {
+    if (isset($_POST["name"]) && $_POST["name"] != "" && $_POST["name"] != null && $_POST["name"] != "") {
         $IsCompelete = true;
     }
 
@@ -24,39 +61,43 @@ if (isset($_GET["odeslat"])) {
         echo "Vypln vsechy pole";
     }
     if ($IsCompelete == true) {
-        echo $_GET["name"];
+        echo $_POST["name"];
         echo "<br>";
-        echo $_GET["nick"];
+        echo $_POST["nick"];
         echo "<br>";
-        echo $_GET["email"];
+        echo $_POST["email"];
         echo "<br>";
-        echo $_GET["password"];
+        echo $_POST["password"];
         echo "<br>";
-        echo $_GET["password2"];
+        echo $_POST["password2"];
         echo "<br>";
-        echo $_GET["tel"];
+        echo $_POST["tel"];
         echo "<br>";
-        echo $_GET["soubor"];
-        echo "<br>";
-        echo $_GET["age"];
-        echo "<br>";
-            
-        
-
-        echo "<br>";
-        echo $_GET["age"];
-        echo "<br>";
-        echo $_GET["radio"];
-        echo "<br>";
-        echo $_GET["checkbox"];
+        echo $_POST["age"];
         echo "<br>";
 
+        $uploaded_file_url = wc_upload_image_return_url($_FILES["soubor"]);
+
+        echo "<img src='" . $uploaded_file_url . "' alt='Soubor' style='width: 200px; height: 200px; padding: 10px;'>";
+
+        echo "<br>";
+        echo $_POST["age"];
+        echo "<br>";
+        echo $_POST["radio"];
+        echo "<br>";
+        if ($_POST["checkbox"] == "on") {
+            echo "checkbox true";
+        }
+        else {
+            echo "checkbox false";
+        }
+        echo "<br>";
     }
 }
 
 if (!$IsCompelete) {
 ?>
-<form action="<?php $_SERVER["PHP_SELF"]?>" method="get" enctype="multipart/form-data">
+<form action="<?php $_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data">
     <div class="form-control">
         <input class="input input-alt" placeholder="Jmeno" type="text" name="name">
         <span class="input-border input-border-alt"></span>
