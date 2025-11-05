@@ -1,0 +1,9 @@
+- maškara 
+- inscenace, premiéra, scéna
+- Jeho tým cílil potřebu
+- Maškary, kelímky ani pieta Maryše nepomohly
+- Padala v tisku slova
+- "scény venkovského štěstí"
+- zašlé časy
+- Maryša je sice klasickým plodem venkovského realismu
+- jako by sem zabloudil z jiné komedie
