@@ -40,7 +40,8 @@ public class Main {
                     String header = getCellValueAsString(cell).trim().toUpperCase();
                     if ("PORADI".equals(header)) {
                         poradiCol = cell.getColumnIndex();
-                    } else if ("JMENO".equals(header)) {
+                    } 
+                    else if ("JMENO".equals(header)) {
                         jmenoCol = cell.getColumnIndex();
                     }
                 }
@@ -206,8 +207,6 @@ public class Main {
             
             System.out.println("Počet studentů: " + N + ". Celková délka okna: " + totalDuration.toMinutes() + " minut.");
             System.out.printf("Délka jednoho slotu: %d minut a %d sekund.\n", slotSeconds / 60, slotSeconds % 60);
-
-            Collections.shuffle(students, new Random());
 
             for (int i = 0; i < N; i++) {
                 students.get(i).cas = timeSlots.get(i);
