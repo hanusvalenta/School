@@ -118,3 +118,21 @@ Románské umění 1000 - 1240
 - 1063 Olomoucké biskupství
 - 1085 Král Vratislav
 - 1158 Král Vladislav
+
+--- 
+
+Středověk
+- Ranný
+- Vrcholný
+Vrchoný - 
+Románské
+- Evropa
+- ČZ
+Gotické 
+
+--- 
+
+Bazilika sv. Prokopa
+- druhá čtvrtina 13. stol Třebíč
+
+--- 
