@@ -117,4 +117,4 @@ prerománské umění 800 - 1000
 Románské umění 1000 - 1240
 - 1063 Olomoucké biskupství
 - 1085 Král Vratislav
-- 1158 Král Vladislav 
+- 1158 Král Vladislav
