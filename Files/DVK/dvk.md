@@ -136,3 +136,17 @@ Bazilika sv. Prokopa
 - druhá čtvrtina 13. stol Třebíč
 
 --- 
+
+Kostel sv. Jakuba
+- vlastnický kostel
+- před r. 1165 po Kr.
+- Jakub u Kutné Hory, pohled do jihovýchodu
+- detail sochařské výzdoby před r. 1165 po Kr.
+- Jakub u Kutné Hory
+
+---
+
+Rotunda sv. Kateřiny
+- 1134 po Kr.
+- Znojmo
+- Mezi dvěma korunovacemi
