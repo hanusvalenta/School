@@ -4,6 +4,8 @@
         header('Location: ' . $url, true, $permanent ? 301 : 302);
         exit();
     }
+
+    require_once ("Db.php");
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -14,6 +16,8 @@
 <body>
 <?php
 define("ROOT_DIR", dirname(__FILE__));
+
+Db::connect("localhost", "PHP", "root", "");
 
 function wc_upload_image_return_url($image_submit) {
     if (empty($image_submit) || $image_submit['error'] != 0) {
@@ -92,6 +96,11 @@ if (isset($_POST["odeslat"])) {
             echo "checkbox false";
         }
         echo "<br>";
+
+        Db::insert('lidi', [
+            'jmeno' => $_POST['name'],
+            'prijmeni' => $_POST['nick']
+        ]);
     }
 }
 
@@ -170,4 +179,3 @@ if (!$IsCompelete) {
 ?>
 </body>
 </html>
-
