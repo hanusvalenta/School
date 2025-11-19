@@ -1,3 +1,4 @@
+import java.nio.file.Files;
 import java.util.Scanner;
 import java.io.*;
 import java.time.Duration;
@@ -8,7 +9,6 @@ import java.util.*;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 
 class Student {
     String poradi;
@@ -26,6 +26,7 @@ public class Main {
 
     private static List<Student> readStudentData(File file) throws IOException {
         List<Student> students = new ArrayList<>();
+        List<String> numbers = new ArrayList<>();
         try (FileInputStream fis = new FileInputStream(file);
              Workbook workbook = new XSSFWorkbook(fis)) {
 
@@ -48,7 +49,7 @@ public class Main {
             }
 
             if (poradiCol == -1 || jmenoCol == -1) {
-                throw new IOException("Nebyly nalezeny sloupce 'PORADI' a/nebo 'JMENO'. Ujistěte se, že jsou v prvním řádku.");
+                throw new IOException();
             }
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
@@ -58,6 +59,8 @@ public class Main {
                 Cell poradiCell = row.getCell(poradiCol);
                 Cell jmenoCell = row.getCell(jmenoCol);
 
+                //numbers.set(i, String.valueOf(jmenoCol));
+
                 String poradi = (poradiCell == null || poradiCell.getCellType() == CellType.BLANK) ? "" : getCellValueAsString(poradiCell);
                 String jmeno = (jmenoCell == null || jmenoCell.getCellType() == CellType.BLANK) ? "" : getCellValueAsString(jmenoCell);
 
@@ -65,10 +68,9 @@ public class Main {
                     students.add(new Student(poradi, jmeno));
                 }
             }
-
-        } catch (Exception e) {
-            System.err.println("Chyba při čtení souboru: " + e.getMessage());
-            throw new IOException("Nepodařilo se zpracovat soubor.", e);
+        }
+        catch (Exception e) {
+            throw new IOException(e);
         }
         return students;
     }
@@ -106,74 +108,70 @@ public class Main {
             }
 
             workbook.write(out);
-            System.out.println("\nRozvrh byl úspěšně zapsán do souboru: " + outputFileName);
+            System.out.println("\n" + outputFileName + " Zapsan");
 
-        } catch (IOException e) {
-            System.err.println("Chyba pri zapise suboru: " + e.getMessage());
+        }
+        catch (IOException e) {
             throw e;
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         String filesDirName = "Files";
-        System.out.println("Aktuální adresář: " + System.getProperty("user.dir"));
+        System.out.println("Slozka " + System.getProperty("user.dir"));
 
         File dir = new File(filesDirName);
         if (!dir.exists()) {
             dir.mkdir();
-            System.out.println("Vytvořen adresář 'Files'.");
+            System.out.println("Vytvorena slozka 'Files'");
         }
 
         if (dir.isDirectory()) {
             File[] files = dir.listFiles((d, name) -> name.toLowerCase().endsWith(".xlsx") || name.toLowerCase().endsWith(".xls"));
             
-            System.out.println("\n--- Dostupné soubory v adresáři 'Files' ---");
-            if (files != null && files.length > 0) {
+            System.out.println("\nSoubory v slozce ->");
+            if (files != null) {
                 for (File f : files) {
                     System.out.println("* " + f.getName());
                 }
-            } else {
-                System.out.println("Adresář '" + filesDirName + "' je prázdný nebo neobsahuje žádné soubory Excel (.xlsx/.xls).");
-                System.out.println("Prosím, vložte soubor do tohoto adresáře a spusťte program znovu.");
-                return;
             }
 
             String inputFileName;
             File inputFile;
             while (true) {
-                System.out.println("\nZadejte přesný název souboru Excel, který chcete použít:");
+                System.out.println("\nZadej nazev souboru");
                 inputFileName = sc.nextLine().trim();
                 inputFile = new File(filesDirName, inputFileName);
                 if (inputFile.exists() && (inputFileName.toLowerCase().endsWith(".xlsx") || inputFileName.toLowerCase().endsWith(".xls"))) {
                     break;
                 }
-                System.out.println("Chyba: Soubor '" + inputFileName + "' neexistuje nebo není platný soubor Excel v adresáři '" + filesDirName + "'.");
             }
 
             List<Student> students;
             try {
                 students = readStudentData(inputFile);
-            } catch (IOException e) {
-                System.err.println("Program byl ukončen kvůli chybě při čtení dat.");
+            }
+            catch (IOException e) {
                 return;
             }
 
             int N = students.size();
             if (N == 0) {
-                System.out.println("Soubor neobsahuje žádné záznamy studentů.");
                 return;
             }
-            System.out.println("\nNačteno studentů: " + N);
+            System.out.println("\nPocet studentu - " + N);
+
+            Collections.shuffle(students);
 
             LocalTime startTime;
             LocalTime endTime;
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
             while (true) {
-                System.out.println("\nZadejte počáteční čas rozvrhu (HH:mm, např. 08:00):");
+                System.out.println("\nZadej start cas");
                 String startTimeStr = sc.nextLine().trim();
-                System.out.println("Zadejte koncový čas rozvrhu (HH:mm, např. 10:00):");
+                System.out.println("Zadej end cas");
                 String endTimeStr = sc.nextLine().trim();
 
                 try {
@@ -182,11 +180,10 @@ public class Main {
 
                     if (endTime.isAfter(startTime)) {
                         break;
-                    } else {
-                        System.out.println("Chyba: Koncový čas musí být po počátečním čase.");
                     }
-                } catch (DateTimeParseException e) {
-                    System.out.println("Chyba formátu: Použijte prosím formát HH:mm (např. 09:30).");
+                }
+                catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
             }
 
@@ -205,20 +202,21 @@ public class Main {
                 }
             }
             
-            System.out.println("Počet studentů: " + N + ". Celková délka okna: " + totalDuration.toMinutes() + " minut.");
-            System.out.printf("Délka jednoho slotu: %d minut a %d sekund.\n", slotSeconds / 60, slotSeconds % 60);
+            System.out.println("Pocet studentu " + N + " | cas zkouseni " + totalDuration.toMinutes() + " minut" + " | bude zbyvat " + remainderSeconds + " sec zhodiny");
+            System.out.printf("Delka jednoho studenta - %d minut a %d sekund\n", slotSeconds / 60, slotSeconds % 60);
 
             for (int i = 0; i < N; i++) {
                 students.get(i).cas = timeSlots.get(i);
             }
 
-            String outputFileName = "Rozvrh_" + inputFileName;
+            String outputFileName = "Zkouseni_" + inputFileName;
             try {
                 writeStudentSchedule(students, outputFileName);
-            } catch (IOException e) {}
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-        } else {
-            System.out.println("\nNepodařilo se vytvořit nebo najít adresář '" + filesDirName + "'.");
         }
     }
 }
