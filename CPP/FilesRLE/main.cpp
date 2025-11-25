@@ -151,7 +151,7 @@ int main(int argc, char* argv[]) {
     else 
     {
         result_content = RleDecompress(file_content);
-        filesystem::path original_filename = selected_file_path.stem(); // e.g., file.txt from file.txt.rle
+        filesystem::path original_filename = selected_file_path.stem();
         out_file_path = out_directory / original_filename;
         cout << "\nCompressed content size: " << file_content.length() << " bytes" << endl;
         cout << "Decompressed content size: " << result_content.length() << " bytes" << endl;
