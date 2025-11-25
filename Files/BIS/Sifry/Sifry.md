@@ -56,6 +56,9 @@ H K Q M I D N S U I E K H K Q S D T L I M T R K J S M R T M T U Q L E D N D S R 
 ---
 
 # polybiuv ctverec s heslem
+Čtverec 5x5 se začne vyplňovat písmeny hesla (L,O,R,E,M) bez duplicit.
+
+![bg right](Tabulka.png)
 
 ---
 
