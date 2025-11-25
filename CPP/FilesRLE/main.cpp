@@ -79,7 +79,7 @@ int main() {
     string file_content((istreambuf_iterator<char>(inFile)), istreambuf_iterator<char>());
     inFile.close();
 
-    string compressed_content = rle_compress(file_content);
+    string compressed_content = RleCompress(file_content);
 
     cout << "\nOriginal content size: " << file_content.length() << " bytes" << endl;
     cout << "Compressed content size: " << compressed_content.length() << " bytes" << endl;
