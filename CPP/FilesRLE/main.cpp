@@ -2,11 +2,11 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <filesystem> // Required for directory operations (C++17)
+#include <filesystem>
 
 using namespace std;
 
-string rle_compress(const string& data) {
+string RleCompress(const string& data) {
     if (data.empty()) {
         return "";
     }
@@ -86,7 +86,7 @@ int main() {
     cout << "Compressed data: " << compressed_content << endl;
 
     try {
-        filesystem::create_directory(out_directory); // Create "Out" directory if it doesn't exist
+        filesystem::create_directory(out_directory);
     } catch (const filesystem::filesystem_error& e) {
         cerr << "Error creating output directory: " << e.what() << endl;
         return 1;
