@@ -187,27 +187,23 @@ public class Main {
                 }
             }
 
-            Duration totalDuration = Duration.between(startTime, endTime);
-            long totalSeconds = totalDuration.getSeconds();
-            long slotSeconds = totalSeconds / N;
-            long remainderSeconds = totalSeconds % N;
+            Duration totalDuration = Duration.between(startTime, endTime).truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
+            long totalMinutes = totalDuration.toMinutes();
+            long slotMinutes = totalMinutes / N;
 
-            List<String> timeSlots = new ArrayList<>();
             LocalTime currentTime = startTime;
+            DateTimeFormatter minuteFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
             for (int i = 0; i < N; i++) {
-                timeSlots.add(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-                currentTime = currentTime.plusSeconds(slotSeconds);
-                if (i < remainderSeconds) {
-                    currentTime = currentTime.plusSeconds(1);
-                }
+                LocalTime slotStartTime = currentTime;
+                LocalTime slotEndTime = slotStartTime.plusMinutes(slotMinutes);
+
+                students.get(i).cas = slotStartTime.format(minuteFormatter) + " - " + slotEndTime.format(minuteFormatter);
+                currentTime = slotEndTime;
             }
             
-            System.out.println("Pocet studentu " + N + " | cas zkouseni " + totalDuration.toMinutes() + " minut" + " | bude zbyvat " + remainderSeconds + " sec zhodiny");
-            System.out.printf("Delka jednoho studenta - %d minut a %d sekund\n", slotSeconds / 60, slotSeconds % 60);
-
-            for (int i = 0; i < N; i++) {
-                students.get(i).cas = timeSlots.get(i);
-            }
+            System.out.println("Pocet studentu " + N + " | cas zkouseni " + totalMinutes + " minut");
+            System.out.printf("Delka jednoho zkouseni - priblizne %d minut\n", slotMinutes);
 
             String outputFileName = "Zkouseni_" + inputFileName;
             try {
