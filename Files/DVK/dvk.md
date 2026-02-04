@@ -18,7 +18,7 @@ class: invert
 ---
 
 # 15.10 
-- užité umění: 
+- užité umění:
 kovolitectví a zlatnictví
 technologie: zlato, zlato + stříbro
 - granulace 
@@ -150,3 +150,36 @@ Rotunda sv. Kateřiny
 - 1134 po Kr.
 - Znojmo
 - Mezi dvěma korunovacemi
+
+---
+
+# 4.2
+
+Filippo Brunelleschi - Nalezenec neviňátek 1419/Santo Spirito
+
+* První renesanční stavba
+* Arkádové průčelí s korintskými sloupy
+
+---
+
+##  Největší kopule = nejlepší 
+Filippo Brunelleschi udělal ve své době největší pomocí dvou koulí
+
+--- 
+
+## Obětování Izáka, Filippo 1401
+## Obětování Izáka, Ghiberti 1401
+
+oba se hlásili na kontest na bronzový reliéf
+- na jednom anděl odtrhává abraháma na druhém se nedotýkají
+- Ghiberti vyhrává kvůli věrnější adaptaci ale taky z ekonomických důvodů
+
+--- 
+
+yap yap o bibli cca 20-30 minut 
+
+obětování izáka abrahámem 
+- první horror v historii
+
+---
+
