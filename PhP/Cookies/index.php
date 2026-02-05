@@ -5,6 +5,8 @@
         exit();
     }
 
+    session_start();
+
     //require_once ("Db.php");
     //Db::connect('127.0.0.1', 'test', 'root', '');
 ?>
@@ -17,14 +19,25 @@
 <body>
     <?php
         if (isset($_COOKIE["onEnter"])){
-            setcookie("onEnter", $_COOKIE["onEnter"] + 1, time() + 5);
             echo $_COOKIE["onEnter"];
+            setcookie("onEnter", $_COOKIE["onEnter"] + 1, time() + 5);
         }
         else {
-            echo "no nookie";
+            echo "no nookie :c";
             setcookie("onEnter", 1, time() + 5);
         }
+
+        if (isset($_SESSION["id"])){
+            echo $_SESSION["id"];
+        }
+        else {
+            echo "no starfish :c";
+        }
     ?>
+    <br>
+    <a href="login.php">Login</a>
+    <br>
+    <a href="logout.php">Logout</a>
     <br>
     <img src="nookie.jpg">
 </body>
