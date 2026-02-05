@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>Formulář</title>
+    <title>Nookie</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,5 +25,7 @@
             setcookie("onEnter", 1, time() + 5);
         }
     ?>
+    <br>
+    <img src="nookie.jpg">
 </body>
 </html>
