@@ -27,7 +27,10 @@
             setcookie("onEnter", 1, time() + 5);
         }
 
+        echo "<br>";
+
         if (isset($_SESSION["id"])){
+            echo "Your session id is: ";
             echo $_SESSION["id"];
         }
         else {
