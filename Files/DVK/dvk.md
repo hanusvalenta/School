@@ -183,3 +183,45 @@ obětování izáka abrahámem
 
 ---
 
+# 11.2
+
+## Jakopino del Conte Michelangelo Buonarroti
+
+- kolem 1535
+- Itálie, Florencie/Řím
+
+---
+
+## Vyhnání z ráje
+Michelangelo - 1509
+- První tomboy na světě
+
+---
+
+## Ignudo
+Michelangelo - 1509
+fresky - sixtýnská kaple
+
+--- 
+
+## Poslední soud
+Michelangelo - 1537-41
+- Hodně se hádal s vatykánem
+
+--- 
+
+## Pieta
+- Seberealizace v mramoru
+
+---
+
+## Zvěstování
+- 1472-75
+
+---
+
+- leonardo si hraje s rozmazaným poazdím
+
+---
+
+
