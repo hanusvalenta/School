@@ -1,12 +1,20 @@
+import Db.Database;
 import Db.Query;
+
+import java.sql.SQLException;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
     IO.println(String.format("Hello and welcome!"));
 
-    Query query = new Query();
+    try {
+        Database database = new Database("test", "admin", "");
+        Object[] data = {"6", "adam", "nemec", "lul", "lol"};
 
-    query.delete("zaci").where("jmeno = ?");
-    System.out.println(query.getQuery());
+        IO.println();
+        int hotovo = database.insert("users:", data);
+    }catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
 }
