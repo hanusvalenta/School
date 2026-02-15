@@ -7,9 +7,9 @@
 int main() {
     int pocet;
 
-    printf("Zadejte pocet retezcu: ");
+    printf("Kolik zaznamu?\n");
     if (scanf("%d", &pocet) != 1 || pocet <= 0) {
-        printf("Neplatny vstup.\n");
+        printf("Neplatne cislo :c\n");
         return 1;
     }
 
@@ -20,9 +20,11 @@ int main() {
         return 1;
     }
 
+    printf("Rezervovano misto pro %d retezcu\n", pocet);
+
     for (int i = 0; i < pocet; i++) {
         char buffer[MAX_DELKA];
-        printf("Zadejte %d. retezec: ", i + 1);
+        printf("Napis obsah %d. retezce: \n", i + 1);
         
         if (fgets(buffer, MAX_DELKA, stdin)) {
             buffer[strcspn(buffer, "\n")] = 0;
@@ -34,10 +36,42 @@ int main() {
         }
     }
 
-    printf("\nUlozene retezce:\n");
     for (int i = 0; i < pocet; i++) {
-        printf("%d: %s\n", i + 1, seznam[i]);
+        printf("ID: %d text:%s delka retezce - %zu\n", i, seznam[i], strlen(seznam[i]));
     }
+
+    int id_oprava;
+    while (1) {
+        printf("Ktery zaznam opravit? Cislo zaznamu: \n");
+        if (scanf("%d", &id_oprava) == 1 && id_oprava >= 0 && id_oprava < pocet) {
+            break;
+        } else {
+            printf("Neplatne id >:c \n");
+            while (getchar() != '\n');
+        }
+    }
+
+    printf("Vybrano: %s\n", seznam[id_oprava]);
+    
+    int index_znaku;
+    printf("Zadej poradi znamu - od indexu 1: \n");
+    scanf("%d", &index_znaku);
+    
+    char novy_znak;
+    printf("Zadej znak - \n");
+    while (getchar() != '\n');
+    scanf("%c", &novy_znak);
+
+    if (index_znaku > 0 && index_znaku <= (int)strlen(seznam[id_oprava])) {
+        seznam[id_oprava][index_znaku - 1] = novy_znak;
+    }
+
+    printf("Novy seznam: \n");
+    for (int i = 0; i < pocet; i++) {
+        printf("id: %d text:%s delka retezce - %zu\n", i, seznam[i], strlen(seznam[i]));
+    }
+
+    printf("Zav\n");
 
     for (int i = 0; i < pocet; i++) {
         free(seznam[i]);

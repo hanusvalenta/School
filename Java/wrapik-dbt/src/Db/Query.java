@@ -1,5 +1,7 @@
 package Db;
 
+import java.util.Arrays;
+
 public class Query {
     private StringBuilder query;
 
