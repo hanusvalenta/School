@@ -70,7 +70,7 @@ Dmitry Alexejevič Glukhovsky je ruský spisovatel a novinář, známý předev�
 
 # Jaroslav Havlíček
 
-Jaroslav Havlíček byl český spisovatel, hlavní představitel psychologické prózy v období mezi světovými válkami. [1, 5]
+Jaroslav Havlíček byl český spisovatel, hlavní představitel psychologické prózy v období mezi světovými válkami.
 
 ## Klíčové informace
 *   **Povolání:** Český spisovatel a bankovní úředník.
@@ -78,9 +78,41 @@ Jaroslav Havlíček byl český spisovatel, hlavní představitel psychologické
 
 ## Styl a témata
 *   **Styl:** Používal realistický a naturalistický popis.
-*   **Témata:** Zaměřoval se na hlubokou psychologii postav, společenskou degeneraci a tragické osudy v prostředí maloměsta na přelomu 19. a 20. století. [1]
+*   **Témata:** Zaměřoval se na hlubokou psychologii postav, společenskou degeneraci a tragické osudy v prostředí maloměsta na přelomu 19. a 20. století.
 
 ## Nejznámější díla
-*   ***Petrolejové lampy*** (1935) [2]
+*   ***Petrolejové lampy*** (1935)
 *   ***Neviditelný*** (1937)
 *   ***Helimadoe*** (1940)
+
+---
+
+# 1984
+
+**George Orwell a román 1984**
+
+Tento dokument shrnuje klíčová fakta o autorovi a jeho nejslavnější dystopické vizi, která definovala chápání totality v moderní literatuře.
+
+## 👤 O autorovi: George Orwell
+Vlastním jménem Eric Arthur Blair (1903–1950), byl britský novinář, esejista a spisovatel, jehož dílo se stalo synonymem pro sociální kritiku a odpor k útlaku.
+
+*   **Zkušenosti z první ruky:** Sloužil u imperiální policie v Barmě, žil mezi chudinou v Londýně a bojoval ve španělské občanské válce. Tyto prožitky zformovaly jeho odpor k imperialismu i stalinismu.
+*   **Politický postoj:** Definoval se jako demokratický socialista, ale proslul především jako nejostřejší kritik totalitních režimů 20. století.
+*   **Literární odkaz:** Jeho styl je přímý, srozumitelný a bez příkras. Kromě 1984 je autorem neméně slavné alegorie Farma zvířat.
+
+## 📚 O knize: 1984
+Román vyšel v roce 1949 a představuje mrazivou vizi světa rozděleného mezi tři supervelmoci (Oceánie, Eurasie, Eastasie), ve kterých je jednotlivec absolutně podřízen Straně.
+
+### Klíčové koncepty a termíny
+| Termín | Význam v knize |
+| :--- | :--- |
+| **Velký bratr** | Symbol moci a neustálého dohledu (Big Brother is watching you). |
+| **Newspeak** | Jazyk osekaný na minimum, aby lidé nemohli formulovat „nebezpečné“ myšlenky. |
+| **Doublethink** | Schopnost udržet v mysli dvě protikladná tvrzení a oběma věřit (např. Válka je mír). |
+| **Ideopolicie** | Složka sledující nejen činy, ale i pouhé náznaky pochybností o režimu. |
+
+### Hlavní dějová linka
+Příběh sleduje Winstona Smithe, úředníka na Ministerstvu pravdy, jehož prací je falšovat historii podle aktuálních potřeb Strany. Winston v sobě začne pociťovat tichý odpor, začne si psát deník a naváže zakázaný vztah s kolegyní Julií. Jejich pokus o vzpouru a hledání pravdy však končí v obávané Místnosti 101, kde Strana ukazuje svou schopnost zlomit lidskou duši až do úplného konce.
+
+> „Kdo ovládá minulost, ovládá budoucnost. Kdo ovládá přítomnost, ovládá minulost.“
+> — Heslo Strany v románu 1984

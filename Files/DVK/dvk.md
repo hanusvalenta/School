@@ -224,4 +224,12 @@ Michelangelo - 1537-41
 
 ---
 
+# 18.2
 
+## Shrnutí minulé hodiny
+
+---
+
+## Giorgione Autoportrét?
+
+* benátky upadají politicky ale rozvijí se kulturně
